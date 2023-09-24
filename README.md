@@ -3,7 +3,9 @@
 This will be an app for calculating dance competition results at swing dance festivals.
 Calculations will be based on Skating System (https://en.wikipedia.org/wiki/Skating_system). I will try to handle most of popular cases (solo competions, leaders and followers judged separately or as couples).
 
-Ideally a mobile app (or app opened in phone's browser) would gather scores from judges directly and results could go live to users visiting app as guests.
+Ideally, unit tests will serve as documentation for the business logic.
+
+Eventually a mobile app (or app opened in phone's browser) would gather scores from judges directly and results could go live to users visiting app as guests.
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
