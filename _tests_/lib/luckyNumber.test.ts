@@ -1,5 +1,5 @@
 import {describe, expect, it} from '@jest/globals';
-import {getLuckyNumber} from '../../lib/luckyNumber';
+import {getLuckyNumber} from '../../lib/helper_functions/luckyNumber';
 
 describe('getLuckyNumber', ()=> {
     it('returns a number larger than 0 each time', () => {

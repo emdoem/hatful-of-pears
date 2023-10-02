@@ -1,4 +1,4 @@
-import { Dancer } from './types';
+import { Dancer } from '../types';
 // import * as getZiUser from 'zi-user';
 
 const getZiUser = require('zi-user');

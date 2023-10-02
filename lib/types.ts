@@ -1,12 +1,37 @@
+export type PositionScoreTable = number[][];
+/* previous version of this type, but it'll be easier to work with a 2-dimensional table
+{
+    'I-I': number[],
+    'I-II': number[],
+    'I-III': number[],
+    'I-IV': number[],
+    'I-V': number[],
+    'I-VI': number[],
+    'I-VII': number[],
+    'I-VIII': number[]
+}
+*/
+
+export type FinalsResultsTable = number[]
+
+export type FinalsScoreTable = JudgeScoreTable[];
+
+type JudgeScoreTable = {
+    id: number,
+    [position: string]: number
+}
+
 export type Couple = {
     id: number,
     leader: Dancer,
     follower: Dancer
-}
+};
+
 export type Dancer = { 
     id: number; 
     firstName: string; 
     lastName: string; 
     role: Role; 
 };
+
 type Role = 'follower' | 'leader' | 'solo';

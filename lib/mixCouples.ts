@@ -1,5 +1,5 @@
 import { Dancer, Couple } from './types';
-import { getLuckyNumber } from './luckyNumber';
+import { getLuckyNumber } from './helper_functions/luckyNumber';
 
 const numberOfCouplesInFinals: number = 6;
 // number will depend on competition rules - to be implemented later

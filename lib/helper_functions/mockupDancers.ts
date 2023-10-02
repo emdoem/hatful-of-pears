@@ -1,4 +1,4 @@
-import { Dancer } from './types';
+import { Dancer } from '../types';
 
 export const followers: Dancer[] = [
     {

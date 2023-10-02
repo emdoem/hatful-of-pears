@@ -1,8 +1,8 @@
 import { describe, xdescribe, expect, it, beforeEach } from '@jest/globals';
 import mixCouples from '../../lib/mixCouples';
-import { followers, leaders } from '../../lib/mockupDancers';
+import { followers, leaders } from '../../lib/helper_functions/mockupDancers';
 import { Couple } from '@/lib/types';
-import { getLuckyNumber } from '../../lib/luckyNumber';
+import { getLuckyNumber } from '../../lib/helper_functions/luckyNumber';
 
 describe('mockupDancers - leaders array', () => {
     it('contains 6 objects', () => {
