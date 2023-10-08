@@ -57,6 +57,7 @@ describe('mixCouples', () => {
         const finalCouples: Couple[] = mixCouples(followers, leaders, luckyNumber, true);
         expect(finalCouples[0].follower).toBe(followers[0]);
     });
+    // the loop wraps around these 2 tests so that each iteration gets a new luckyNumber
     for (let i = 0; i < 10; i++) {
         it('rotates leaders when leaders should be rotating', () => {
             const leadersRotating = true;
