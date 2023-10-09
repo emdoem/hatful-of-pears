@@ -4,8 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 
 // this needs to be restructured - to populate leaders & followers separately?
-export function DancerInput({ coupleNumber, onSubmit }: { [prop: string]: any; }) {
-    // need to work out better typing for props
+export function DancerInput({ coupleNumber, onSubmit }: { coupleNumber: number, onSubmit: () => void }) {
     return (
         <Card>
             <CardHeader>

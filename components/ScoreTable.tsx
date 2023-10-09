@@ -7,8 +7,7 @@ import {
   TableRow
 } from "@/components/ui/table";
 
-// need to check the type for data used
-export function ScoreTable({ data }: { [prop: string]: any; }) {
+export function ScoreTable({ data }: { data: {}[]; }) {
   const tableColumns = [...Object.keys(data[0])];
   return (
     <Table className="my-3">
