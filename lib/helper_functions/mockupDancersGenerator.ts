@@ -13,7 +13,8 @@ export function getFollowers(amount: number) {
             id: i,
             firstName: getFirstName(),
             lastName: getLastName(),
-            role: 'follower'
+            role: 'follower',
+            scores: {}
         }
     }
     return followers;
@@ -26,7 +27,8 @@ export function getLeaders(amount: number) {
             id: i + 100,
             firstName: getFirstName(),
             lastName: getLastName(),
-            role: 'leader'
+            role: 'leader',
+            scores: {}
         }
     }
     return leaders;
@@ -39,7 +41,8 @@ export function getSoloDancers(amount: number) {
             id: i,
             firstName: getFirstName(),
             lastName: getLastName(),
-            role: 'solo'
+            role: 'solo',
+            scores: {}
         }
     }
     return soloDancers;

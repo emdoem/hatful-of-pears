@@ -6,22 +6,28 @@ describe('scoresToTable', () => {
     it('rewrites FinalsScoreTable to PositionScoreTable', () => {
         const input = [
             {
-                id: 1,
-                firstPlace: 7,
-                secondPlace: 3,
-                thirdPlace: 1
+                id: 'judge_A',
+                scores: {
+                    firstPlace: 7,
+                    secondPlace: 3,
+                    thirdPlace: 1
+                }
             },
             {
-                id: 2,
-                firstPlace: 3,
-                secondPlace: 1,
-                thirdPlace: 7
+                id: 'judge_B',
+                scores: {
+                    firstPlace: 3,
+                    secondPlace: 1,
+                    thirdPlace: 7
+                }
             },
             {
-                id: 3,
-                firstPlace: 3,
-                secondPlace: 1,
-                thirdPlace: 7
+                id: 'judge_C',
+                scores: {
+                    firstPlace: 3,
+                    secondPlace: 1,
+                    thirdPlace: 7
+                }
             },
         ];
         const expectedOutput: PositionScoreTable = [

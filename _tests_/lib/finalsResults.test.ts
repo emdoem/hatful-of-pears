@@ -6,34 +6,44 @@ describe('finalsResults ', () => {
     describe('for a sample score table ', () => {
         const inputScores = [
             {
-                id: 1,
-                firstPlace: 7,
-                secondPlace: 3,
-                thirdPlace: 1
+                id: 'judge_A',
+                scores: {
+                    firstPlace: 7,
+                    secondPlace: 3,
+                    thirdPlace: 1
+                }
             },
             {
-                id: 2,
-                firstPlace: 7,
-                secondPlace: 4,
-                thirdPlace: 2
+                id: 'judge_B',
+                scores: {
+                    firstPlace: 7,
+                    secondPlace: 4,
+                    thirdPlace: 2
+                }
             },
             {
-                id: 3,
-                firstPlace: 7,
-                secondPlace: 5,
-                thirdPlace: 1
+                id: 'judge_C',
+                scores: {
+                    firstPlace: 7,
+                    secondPlace: 5,
+                    thirdPlace: 1
+                }
             },
             {
-                id: 4,
-                firstPlace: 3,
-                secondPlace: 2,
-                thirdPlace: 7
+                id: 'judge_D',
+                scores: {
+                    firstPlace: 3,
+                    secondPlace: 2,
+                    thirdPlace: 7
+                }
             },
             {
-                id: 5,
-                firstPlace: 1,
-                secondPlace: 6,
-                thirdPlace: 5
+                id: 'judge_E',
+                scores: {
+                    firstPlace: 1,
+                    secondPlace: 6,
+                    thirdPlace: 5
+                }
             },
         ];
         const results = finalsResults(inputScores);
@@ -63,60 +73,74 @@ describe('finalsResults ', () => {
     describe('for a historical data sample I ', () => {
         const inputScores = [
             {
-                id: 1,
-                first: 78,
-                second: 82,
-                third: 80,
-                fourth: 77,
-                fifth: 79
+                id: 'judge_A',
+                scores: {
+                    first: 78,
+                    second: 82,
+                    third: 80,
+                    fourth: 77,
+                    fifth: 79
+                }
             },
             {
-                id: 2,
-                first: 78,
-                second: 82,
-                third: 79,
-                fourth: 77,
-                fifth: 80
+                id: 'judge_B',
+                scores: {
+                    first: 78,
+                    second: 82,
+                    third: 79,
+                    fourth: 77,
+                    fifth: 80
+                }
             },
             {
-                id: 3,
-                first: 78,
-                second: 82,
-                third: 80,
-                fourth: 79,
-                fifth: 77
+                id: 'judge_C',
+                scores: {
+                    first: 78,
+                    second: 82,
+                    third: 80,
+                    fourth: 79,
+                    fifth: 77
+                }
             },
             {
-                id: 4,
-                first: 78,
-                second: 80,
-                third: 82,
-                fourth: 77,
-                fifth: 79
+                id: 'judge_D',
+                scores: {
+                    first: 78,
+                    second: 80,
+                    third: 82,
+                    fourth: 77,
+                    fifth: 79
+                }
             },
             {
-                id: 5,
-                first: 78,
-                second: 82,
-                third: 80,
-                fourth: 79,
-                fifth: 77
+                id: 'judge_E',
+                scores: {
+                    first: 78,
+                    second: 82,
+                    third: 80,
+                    fourth: 79,
+                    fifth: 77
+                }
             },
             {
-                id: 6,
-                first: 78,
-                second: 82,
-                third: 80,
-                fourth: 77,
-                fifth: 79
+                id: 'judge_F',
+                scores: {
+                    first: 78,
+                    second: 82,
+                    third: 80,
+                    fourth: 77,
+                    fifth: 79
+                }
             },
             {
-                id: 7,
-                first: 78,
-                second: 82,
-                third: 77,
-                fourth: 80,
-                fifth: 79
+                id: 'judge_G',
+                scores: {
+                    first: 78,
+                    second: 82,
+                    third: 77,
+                    fourth: 80,
+                    fifth: 79
+                }
             },
         ];
         const results: FinalsResultsTable = finalsResults(inputScores);

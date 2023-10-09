@@ -17,8 +17,8 @@ export type FinalsResultsTable = number[]
 export type FinalsScoreTable = JudgeScoreTable[];
 
 type JudgeScoreTable = {
-    id: number,
-    [position: string]: number
+    id: string,
+    scores: {[position: string]: number}
 }
 
 export type Couple = {
@@ -28,10 +28,11 @@ export type Couple = {
 };
 
 export type Dancer = { 
-    id: number; 
-    firstName: string; 
-    lastName: string; 
-    role: Role; 
+    id: number,
+    firstName: string,
+    lastName: string,
+    role: Role,
+    scores: {[judgeId: string]: number}
 };
 
 type Role = 'follower' | 'leader' | 'solo';
