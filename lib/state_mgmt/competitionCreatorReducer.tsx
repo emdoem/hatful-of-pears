@@ -1,5 +1,25 @@
 'use client';
-import { initialState } from '../components/CompetitionCreator';
+import { Dancer } from '../types';
+
+export const initialState: {
+  creatorStep: 'start' | 'dancers' | 'judges' | 'scores';
+  competitionSetup: {
+    competitionType: null | 'fixedCouples' | 'mixedCouples' | 'solo';
+    numberOfJudges: number;
+    numberOfDancers: number;
+  };
+  dancers: Dancer[];
+  judges: { [property: string]: string; }[];
+} = {
+  creatorStep: 'start',
+  competitionSetup: {
+    competitionType: null,
+    numberOfJudges: 0,
+    numberOfDancers: 0
+  },
+  dancers: [],
+  judges: []
+};
 
 export function competitionCreatorReducer(
   state = initialState,
@@ -29,4 +49,6 @@ export function competitionCreatorReducer(
       return state;
   }
 }
-const getCreatorStep = (state: typeof initialState) => state.creatorStep;
+export const getCreatorStep = (state: typeof initialState) => state.creatorStep;
+
+
