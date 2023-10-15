@@ -7,6 +7,10 @@ Ideally, unit tests will serve as documentation for the business logic.
 
 Eventually a mobile app (or app opened in phone's browser) would gather scores from judges directly and results could go live to users visiting app as guests.
 
+CompetitionCreator component will handle state and will manage partial form components to gather data for the final calculations.
+
+Using shadcn UI components.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
