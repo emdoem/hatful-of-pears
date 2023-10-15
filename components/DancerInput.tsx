@@ -2,9 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from "zod";
+import { Form, FormLabel, FormField, FormItem, FormControl, FormDescription } from '@/components/ui/form'
 
 // this needs to be restructured - to populate leaders & followers separately?
-export function DancerInput({ coupleNumber, onSubmit }: { coupleNumber: number, onSubmit: () => void }) {
+export function DancerInput({ coupleNumber, handleSubmit }: { coupleNumber: number, handleSubmit: () => void }) {
     return (
         <Card>
             <CardHeader>
@@ -24,7 +28,7 @@ export function DancerInput({ coupleNumber, onSubmit }: { coupleNumber: number, 
                     <Input type='text' />
                 </div>
                 <div className='flex justify-between'>
-                    <Button onClick={onSubmit}>Add to competition</Button>
+                    <Button onClick={handleSubmit}>Add to competition</Button>
                     <Button variant='secondary'>Random</Button>
                 </div>
             </CardContent>

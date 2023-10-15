@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 
-export function JudgeInput({ judgeNumber, onSubmit }: { [prop: string]: any; }) {
+export function JudgeInput({ judgeNumber, handleSubmit }: { [prop: string]: any; }) {
     return (
         <Card>
             <CardHeader>
@@ -19,7 +19,7 @@ export function JudgeInput({ judgeNumber, onSubmit }: { [prop: string]: any; }) 
                     <Input type='text' />
                 </div>
                 <div className='flex justify-between'>
-                    <Button onClick={onSubmit}>Add to competition</Button>
+                    <Button onClick={handleSubmit}>Add to competition</Button>
                     <Button variant='secondary'>Random</Button>
                 </div>
             </CardContent>
