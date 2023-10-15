@@ -1,8 +1,6 @@
-import Head from 'next/head';
+import Head from 'next/head'; // to be replaced with metadata object from layout.tsx
 import Layout, { siteTitle } from './layout';
-import Image from 'next/image';
 import { WelcomeCard } from '../components/WelcomeCard';
-import { Button } from '@/components/ui/button';
 
 export default function Home() {
     return (
