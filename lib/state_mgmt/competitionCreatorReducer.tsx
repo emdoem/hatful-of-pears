@@ -22,10 +22,10 @@ export const initialState: {
 };
 
 export function competitionCreatorReducer(
-  state = initialState,
+  state: typeof initialState,
   action: {
     type: string;
-    data: { [property: string]: any; };
+    data: {[property: string]: any} // Partial<typeof initialState>;
   }
 ): typeof initialState {
   if (typeof state === 'undefined') {
@@ -45,10 +45,17 @@ export function competitionCreatorReducer(
     case "GO_TO_SCORES": {
       return { ...state, creatorStep: 'scores' };
     }
+    case "START_COMPETITION": {
+      if (!action.data.competitionType && !action.data.numberOfJudges && !action.data.numberOfDancers) return state;
+      const { competitionType, numberOfJudges, numberOfDancers } = action.data;
+      // console.log('Updating competition setup with: ', competitionType, numberOfJudges, numberOfDancers);
+      return { ...state, competitionSetup: {competitionType, numberOfJudges, numberOfDancers}};
+    }
     default:
       return state;
   }
 }
+
 export const getCreatorStep = (state: typeof initialState) => state.creatorStep;
-
-
+export const getCompetitionType = (state: typeof initialState) => state.competitionSetup.competitionType;
+export const getCompetitionSetup = (state: typeof initialState) => state.competitionSetup;
