@@ -7,78 +7,51 @@ import { useState } from 'react';
 import { InitializeCompetition } from './InitializeCompetition';
 import { ScoreTable } from './ScoreTable';
 import { useReducer } from 'react';
-import { competitionCreatorReducer, getCreatorStep } from '../lib/state_mgmt/competitionCreatorReducer';
+import { competitionCreatorReducer, getCreatorStep, getCompetitionSetup } from '../lib/state_mgmt/competitionCreatorReducer';
 import { initialState } from '@/lib/state_mgmt/competitionCreatorReducer';
+import { string } from 'zod';
+import { sampleDancers, sampleJudges } from '../lib/helper_functions/sampleDataForCompetitionCreator';
 
-const sampleDancers = [
-  {
-    id: 7,
-    dancers: 'Betty Takier, Hal Takier',
-    judge_A: 3,
-    judge_B: 1,
-    judge_C: 1
-  },
-  {
-    id: 13,
-    dancers: 'Natalia Esparza, Maxi Dorf',
-    judge_A: 1,
-    judge_B: 2,
-    judge_C: 3
-  },
-  {
-    id: 32,
-    dancers: 'Laila & Willie Desatoff',
-    judge_A: 2,
-    judge_B: 3,
-    judge_C: 2
-  }
-]
+type startCompValues = typeof initialState.competitionSetup;
 
-const sampleJudges = [
-  {
-    id: 'A',
-    firstName: 'Andreas',
-    lastName: 'Olsson'
-  },
-  {
-    id: 'B',
-    firstName: 'Jeremy',
-    lastName: 'Otth'
-  }, {
-    id: 'C',
-    firstName: 'Mickey',
-    lastName: 'Fortanasce'
-  }
-]
-
+// actions?
 const goToStart = () => ({ type: "GO_TO_START", data: {} });
 const goToDancers = () => ({ type: "GO_TO_DANCERS", data: {} });
 const goToJudges = () => ({ type: "GO_TO_JUDGES", data: {} });
 const goToScores = () => ({ type: "GO_TO_SCORES", data: {} });
+const startCompetition = (values: startCompValues) => ({type: "START_COMPETITION", data: {...values}})
 
 export default function CompetitionCreator() {
-  const [creatorState, creatorDispatch] = useReducer(competitionCreatorReducer, initialState)
-const creatorStep = getCreatorStep(creatorState)
-  const goToNextStep = () => {
-    
+  const [creatorState, dispatch] = useReducer(competitionCreatorReducer, initialState);
+  const creatorStep = getCreatorStep(creatorState);
+
+  const goToNextStep = () => {    
     if (creatorStep === 'start') {
-      creatorDispatch(goToDancers());
+      dispatch(goToDancers());
     } else if (creatorStep === 'dancers') {
-      creatorDispatch(goToJudges());
+      dispatch(goToJudges());
     } else if (creatorStep === 'judges') {
-      creatorDispatch(goToScores());
+      dispatch(goToScores());
     } else if (creatorStep === 'scores') {
-      creatorDispatch(goToStart());
+      dispatch(goToStart());
     } else {
       return null;
     }
   }
+
+  const handleStart = (values: any) => {
+    
+    dispatch(startCompetition(values));
+    goToNextStep();
+    console.log('Initializing the competition:', creatorState.competitionSetup);
+  }
+
   return (
     <main className='flex flex-col justify-center p-20'>
-      {(creatorStep === 'start') ? <InitializeCompetition onSubmit={goToNextStep} /> : null}
-      {(creatorStep === 'dancers') ? <DancerInput coupleNumber={2} onSubmit={goToNextStep} /> : null}
-      {(creatorStep === 'judges') ? <JudgeInput judgeNumber={4} onSubmit={goToNextStep} /> : null}
-      {(creatorStep === 'scores') ? <ScoreInput judgeName={'Andreas Olsson'} numberOfPositions={6} onSubmit={goToNextStep} /> : null}
+      {(creatorStep === 'start') ? <InitializeCompetition handleSubmit={handleStart} /> : null}
+      {(creatorStep === 'dancers') ? <DancerInput coupleNumber={2} handleSubmit={goToNextStep} /> : null}
+      {(creatorStep === 'judges') ? <JudgeInput judgeNumber={4} handleSubmit={goToNextStep} /> : null}
+      {(creatorStep === 'scores') ? <ScoreInput judgeName={'Andreas Olsson'} numberOfPositions={6} handleSubmit={goToNextStep} /> : null}
       <div className='flex flex-col'>
         <ScoreTable data={sampleDancers} />
         <ScoreTable data={sampleJudges} />
