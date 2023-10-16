@@ -1,5 +1,5 @@
 'use client';
-import { Dancer } from '../types';
+import { Dancer, FixedCouple, MixedCouple, DancerValues } from '../types';
 
 export const initialState: {
   creatorStep: 'start' | 'dancers' | 'judges' | 'scores';
@@ -8,7 +8,8 @@ export const initialState: {
     numberOfJudges: number;
     numberOfDancers: number;
   };
-  dancers: Dancer[];
+  dancers: { [property: string]: string; }[]; 
+  // this should've been DancerValues[], but the shape is to complicated to narrow type in actions
   judges: { [property: string]: string; }[];
 } = {
   creatorStep: 'start',
@@ -25,7 +26,7 @@ export function competitionCreatorReducer(
   state: typeof initialState,
   action: {
     type: string;
-    data: {[property: string]: any} // Partial<typeof initialState>;
+    data: {[property: string]: any} // Partial<typeof initialState>; - still have to do type narrowing for actions
   }
 ): typeof initialState {
   if (typeof state === 'undefined') {
@@ -51,6 +52,13 @@ export function competitionCreatorReducer(
       // console.log('Updating competition setup with: ', competitionType, numberOfJudges, numberOfDancers);
       return { ...state, competitionSetup: {competitionType, numberOfJudges, numberOfDancers}};
     }
+    case "ADD_DANCER": {
+      const dancerToAdd = action.data;
+      const dancers = state.dancers;
+      if (!dancerToAdd.id) return state;
+      dancers.push(dancerToAdd);
+      return {...state, dancers};
+    }
     default:
       return state;
   }
@@ -59,3 +67,4 @@ export function competitionCreatorReducer(
 export const getCreatorStep = (state: typeof initialState) => state.creatorStep;
 export const getCompetitionType = (state: typeof initialState) => state.competitionSetup.competitionType;
 export const getCompetitionSetup = (state: typeof initialState) => state.competitionSetup;
+export const getDancers = (state: typeof initialState) => state.dancers;
