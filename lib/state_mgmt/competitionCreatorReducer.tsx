@@ -4,7 +4,7 @@ import { Dancer } from '../types';
 export const initialState: {
   creatorStep: 'start' | 'dancers' | 'judges' | 'scores';
   competitionSetup: {
-    competitionType: null | 'fixedCouples' | 'mixedCouples' | 'solo';
+    competitionType: '' | 'fixedCouples' | 'mixedCouples' | 'solo';
     numberOfJudges: number;
     numberOfDancers: number;
   };
@@ -13,7 +13,7 @@ export const initialState: {
 } = {
   creatorStep: 'start',
   competitionSetup: {
-    competitionType: null,
+    competitionType: '',
     numberOfJudges: 0,
     numberOfDancers: 0
   },

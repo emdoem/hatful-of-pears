@@ -49,7 +49,11 @@ export default function CompetitionCreator() {
   return (
     <main className='flex flex-col justify-center p-20'>
       {(creatorStep === 'start') ? <InitializeCompetition handleSubmit={handleStart} /> : null}
-      {(creatorStep === 'dancers') ? <DancerInput coupleNumber={2} handleSubmit={goToNextStep} /> : null}
+      {(creatorStep === 'dancers') ? <DancerInput 
+        competitionType={getCompetitionSetup(creatorState).competitionType}
+        numberOfDancers={getCompetitionSetup(creatorState).numberOfDancers} 
+        handleSubmit={goToNextStep} 
+      /> : null}
       {(creatorStep === 'judges') ? <JudgeInput judgeNumber={4} handleSubmit={goToNextStep} /> : null}
       {(creatorStep === 'scores') ? <ScoreInput judgeName={'Andreas Olsson'} numberOfPositions={6} handleSubmit={goToNextStep} /> : null}
       <div className='flex flex-col'>
