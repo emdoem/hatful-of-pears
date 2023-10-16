@@ -1,12 +1,12 @@
-import { Dancer, Couple } from './types';
+import { Dancer, MixedCouple } from './types';
 import { getLuckyNumber } from './helper_functions/luckyNumber';
 
 const numberOfCouplesInFinals: number = 6;
 // number will depend on competition rules - to be implemented later
 const luckyNumber: number = getLuckyNumber(numberOfCouplesInFinals);
 
-export default function mixCouples(followers: Dancer[], leaders: Dancer[], luckyNumber: number, leadersRotating: boolean = false): Couple[] {
-    let finalsCouples: Couple[] = [];
+export default function mixCouples(followers: Dancer[], leaders: Dancer[], luckyNumber: number, leadersRotating: boolean = false): MixedCouple[] {
+    let finalsCouples: MixedCouple[] = [];
     const numberOfCouples = leaders.length;
     if (leadersRotating) {
         followers.forEach((dancer: Dancer, index) => {
