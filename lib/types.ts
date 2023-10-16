@@ -21,7 +21,13 @@ type JudgeScoreTable = {
     scores: {[position: string]: number}
 }
 
-export type Couple = {
+export type FixedCouple = {
+    id: number,
+    followersName: string,
+    leadersName: string
+}
+
+export type MixedCouple = {
     id: number,
     leader: Dancer,
     follower: Dancer
@@ -36,3 +42,4 @@ export type Dancer = {
 };
 
 type Role = 'follower' | 'leader' | 'solo';
+export type DancerValues = Dancer | MixedCouple | FixedCouple;
