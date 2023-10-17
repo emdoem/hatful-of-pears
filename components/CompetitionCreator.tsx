@@ -3,14 +3,12 @@
 import { DancerInput } from '@/components/DancerInput';
 import { JudgeInput } from '@/components/JudgeInput';
 import { ScoreInput } from '@/components/ScoreInput';
-import { useState } from 'react';
 import { InitializeCompetition } from './InitializeCompetition';
 import { ScoreTable } from './ScoreTable';
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { competitionCreatorReducer, getCreatorStep, getCompetitionSetup, getCompetitionType, getDancers } from '../lib/state_mgmt/competitionCreatorReducer';
 import { initialState } from '@/lib/state_mgmt/competitionCreatorReducer';
-import { string } from 'zod';
-import { sampleDancers, sampleJudges } from '../lib/helper_functions/sampleDataForCompetitionCreator';
+import { sampleJudges } from '../lib/helper_functions/sampleDataForCompetitionCreator';
 import { DancerValues } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 
@@ -25,13 +23,19 @@ const addDancer = (dancerToAdd: DancerValues) => ({ type: "ADD_DANCER", data: { 
 
 export default function CompetitionCreator() {
   const [creatorState, dispatch] = useReducer(competitionCreatorReducer, initialState);
-  const creatorStep = getCreatorStep(creatorState);
 
+  const creatorStep = getCreatorStep(creatorState);
   const competitionSetup = getCompetitionSetup(creatorState);
   const competitionType = getCompetitionType(creatorState);
   const numberOfDancers = getCompetitionSetup(creatorState).numberOfDancers;
-  const numberOfJudges = getCompetitionSetup(creatorState).numberOfJudges;
-  const dancers = getDancers(creatorState);
+  const dancers= getDancers(creatorState); 
+
+  useEffect(() => {
+    const updatedDancers = getDancers(creatorState);
+    if ((updatedDancers.length === numberOfDancers) && (creatorStep === 'dancers')) {
+      goToNextStep();
+    }
+  }, [creatorState]);
 
   const goToNextStep = () => {
     if (creatorStep === 'start') {
@@ -50,15 +54,12 @@ export default function CompetitionCreator() {
   const handleStart = (values: any) => {
     dispatch(startCompetition(values));
     goToNextStep();
-    console.log('Initializing the competition:', creatorState.competitionSetup);
+    // console.log('Initializing the competition:', creatorState.competitionSetup); - this doesn't even display the current state value!
   }
 
   const handleSubmitDancer = (values: any) => {
     dispatch(addDancer(values));
-    console.log('Dispatching addDancer action!');
-    if (dancers.length === numberOfDancers) {
-      goToNextStep();
-    }
+    console.log('Dispatching addDancer action!');    
   }
 
   return (
