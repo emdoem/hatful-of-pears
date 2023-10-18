@@ -8,7 +8,7 @@ export const initialState: {
     numberOfJudges: number;
     numberOfDancers: number;
   };
-  dancers: { [property: string]: string; }[]; 
+  dancers: { [property: string]: string; }[];
   // this should've been DancerValues[], but the shape is to complicated to narrow type in actions
   judges: { [property: string]: string; }[];
 } = {
@@ -26,7 +26,7 @@ export function competitionCreatorReducer(
   state: typeof initialState,
   action: {
     type: string;
-    data: {[property: string]: any} // Partial<typeof initialState>; - still have to do type narrowing for actions
+    data: { [property: string]: any } // Partial<typeof initialState>; - still have to do type narrowing for actions
   }
 ): typeof initialState {
   if (typeof state === 'undefined') {
@@ -50,14 +50,20 @@ export function competitionCreatorReducer(
       if (!action.data.competitionType && !action.data.numberOfJudges && !action.data.numberOfDancers) return state;
       const { competitionType, numberOfJudges, numberOfDancers } = action.data;
       // console.log('Updating competition setup with: ', competitionType, numberOfJudges, numberOfDancers);
-      return { ...state, competitionSetup: {competitionType, numberOfJudges, numberOfDancers}};
+      return { ...state, competitionSetup: { competitionType, numberOfJudges, numberOfDancers } };
     }
     case "ADD_DANCER": {
       const dancerToAdd = action.data;
       const dancers = [...state.dancers];
       if (!dancerToAdd.id) return state;
+      let areIdsUnique = true;
+      dancers.forEach(dancer => (dancer.id === dancerToAdd.id) ? areIdsUnique = false : null);
+      if (!areIdsUnique) {
+        console.log('Ids must be unique!');
+        return state;
+      }
       if (dancers.length < state.competitionSetup.numberOfDancers) dancers.push(dancerToAdd);
-      return {...state, dancers};
+      return { ...state, dancers };
     }
     default:
       return state;
