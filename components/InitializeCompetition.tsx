@@ -67,7 +67,12 @@ export function InitializeCompetition({ handleSubmit }: { [prop: string]: any; }
                 <FormItem className="my-5">
                   <FormLabel>Number of judges</FormLabel>
                   <FormControl>
-                    <Input type='number' min="3" {...field} />
+                    <Input 
+                      type='number' 
+                      min="3" 
+                      {...field} 
+                      onChange={(e) => form.setValue('numberOfJudges', parseInt(e.target.value, 10))}
+                    />
                   </FormControl>
                 </FormItem>
               )}
@@ -79,7 +84,12 @@ export function InitializeCompetition({ handleSubmit }: { [prop: string]: any; }
                 <FormItem className="my-5">
                   <FormLabel>Number of couples / solo dancers</FormLabel>
                   <FormControl>
-                    <Input type='number' min="2" {...field} />
+                    <Input 
+                      type='number' 
+                      min="2" 
+                      {...field} 
+                      onChange={(e) => form.setValue('numberOfDancers', parseInt(e.target.value, 10))}
+                    />
                   </FormControl>
                 </FormItem>
               )}
