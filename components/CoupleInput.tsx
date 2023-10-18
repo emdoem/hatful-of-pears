@@ -16,7 +16,8 @@ const FormSchema = z.object({
 });
 
 export function CoupleInput({
-    handleSubmit, coupleNumber
+    handleSubmit, 
+    coupleNumber
 }: {
     handleSubmit: (values: z.infer<typeof FormSchema>) => void;
     coupleNumber: number;

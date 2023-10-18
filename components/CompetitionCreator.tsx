@@ -6,7 +6,7 @@ import { ScoreInput } from '@/components/ScoreInput';
 import { InitializeCompetition } from './InitializeCompetition';
 import { ScoreTable } from './ScoreTable';
 import { useEffect, useReducer } from 'react';
-import { competitionCreatorReducer, getCreatorStep, getCompetitionSetup, getCompetitionType, getDancers } from '../lib/state_mgmt/competitionCreatorReducer';
+import { competitionCreatorReducer, getCreatorStep, getCompetitionSetup, getCompetitionType, getDancers, getJudges } from '../lib/state_mgmt/competitionCreatorReducer';
 import { initialState } from '@/lib/state_mgmt/competitionCreatorReducer';
 import { sampleJudges } from '../lib/helper_functions/sampleDataForCompetitionCreator';
 import { DancerValues } from '@/lib/types';
@@ -28,7 +28,8 @@ export default function CompetitionCreator() {
   const competitionSetup = getCompetitionSetup(creatorState);
   const competitionType = getCompetitionType(creatorState);
   const numberOfDancers = getCompetitionSetup(creatorState).numberOfDancers;
-  const dancers= getDancers(creatorState); 
+  const dancers = getDancers(creatorState); 
+  const judges = getJudges(creatorState); 
 
   useEffect(() => {
     const updatedDancers = getDancers(creatorState);
@@ -70,13 +71,16 @@ export default function CompetitionCreator() {
         handleSubmit={handleSubmitDancer}
         inputNumber={dancers.length + 1}
       /> : null}
-      {(creatorStep === 'judges') ? <JudgeInput judgeNumber={4} handleSubmit={goToNextStep} /> : null}
+      {(creatorStep === 'judges') ? <JudgeInput 
+        judgeNumber={judges.length + 1} 
+        handleSubmit={goToNextStep} 
+      /> : null}
       {(creatorStep === 'scores') ? <ScoreInput judgeName={'Andreas Olsson'} numberOfPositions={6} handleSubmit={goToNextStep} /> : null}
       {(competitionType != '') ? <CompetitionSetupCard competitionSetup={competitionSetup} /> : null}
       <div className='flex flex-col'>
 
         {(dancers.length > 0) ? <ScoreTable data={dancers} /> : null}
-        <ScoreTable data={sampleJudges} />
+        {(judges.length > 0) ? <ScoreTable data={judges} /> : null}
       </div>
 
     </main>

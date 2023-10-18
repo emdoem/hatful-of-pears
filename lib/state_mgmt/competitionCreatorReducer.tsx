@@ -74,3 +74,4 @@ export const getCreatorStep = (state: typeof initialState) => state.creatorStep;
 export const getCompetitionType = (state: typeof initialState) => state.competitionSetup.competitionType;
 export const getCompetitionSetup = (state: typeof initialState) => state.competitionSetup;
 export const getDancers = (state: typeof initialState) => state.dancers;
+export const getJudges = (state: typeof initialState) => state.judges;
