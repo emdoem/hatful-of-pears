@@ -5,39 +5,41 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from "zod";
 import { Form, FormLabel, FormField, FormItem, FormControl } from '@/components/ui/form';
+import { randomCouple } from '../lib/helper_functions/randomCouple';
+import { useEffect } from 'react';
+
 
 const FormSchema = z.object({
     id: z.number().min(0, 'Id must be a positive number.'),
     followerName: z.string(),
     leaderName: z.string()
 });
-// props typing needs to be fixed - do I have to import handler type from CompetitionCreator?
+
 export function CoupleInput({
     handleSubmit, coupleNumber
 }: {
-    handleSubmit: (values: any) => void;
+    handleSubmit: (values: z.infer<typeof FormSchema>) => void;
     coupleNumber: number;
 }) {
+    const defaultValues = {
+        id: coupleNumber, 
+        followerName: `Follower's name`,
+        leaderName: `Leader's name`
+    }
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
-        defaultValues: {
-            // id: 7
-            followerName: `Follower's name`,
-            leaderName: `Leader's name`
-        }
+        defaultValues: defaultValues
     });
 
     function onSubmit(values: z.infer<typeof FormSchema>) {
         console.log(values);
         handleSubmit(values);
-
     }
 
-    function randomCouple(e: any) {
-        console.log('Inserting random couple!');
-        e.preventDefault; // this doesn't work yet
-    }
+    useEffect(() => {
+        form.reset(defaultValues)
+    }, [form.formState.submitCount])
 
     return (
         <Card>
@@ -54,10 +56,10 @@ export function CoupleInput({
                                 <FormItem className="my-5">
                                     <FormLabel>Couple Id</FormLabel>
                                     <FormControl>
-                                        <Input 
-                                            type='number' 
-                                            min="0" 
-                                            {...field} 
+                                        <Input
+                                            type='number'
+                                            min="0"
+                                            {...field}
                                             onChange={(e) => form.setValue('id', parseInt(e.target.value, 10))}
                                         />
                                     </FormControl>
@@ -88,13 +90,13 @@ export function CoupleInput({
                             )} />
                         <div className='flex justify-between'>
                             <Button type='submit'>Add to competition</Button>
-                            <Button variant='secondary' onClick={randomCouple}>Random</Button>
+                            <Button variant='secondary' disabled onClick={randomCouple}>Random</Button>
                         </div>
                     </form>
                 </Form>
-
-
             </CardContent>
         </Card>
     );
 }
+
+
