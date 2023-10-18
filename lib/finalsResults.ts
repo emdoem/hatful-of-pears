@@ -22,7 +22,7 @@ export function finalsResults(finalsScores: FinalsScoreTable) {
                 n++;
             }
         }
-
+        // tie logic still missing
         results[i] = modeForI[0];
         positionScoreTable = removeDancerFromTable(results[i], positionScoreTable);
     }
