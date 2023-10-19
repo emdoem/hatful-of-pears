@@ -7,13 +7,22 @@ import {
   TableRow
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { initialState } from "@/lib/state_mgmt/competitionCreatorReducer";
 
-export function ScoreTable({ data }: { data: {}[]; }) {
+type ScoreTableData = (typeof initialState.dancers) | (typeof initialState.judges);
+
+export function ScoreTable({ data }: { data: ScoreTableData; }) {
   const tableColumns = [...Object.keys(data[0])];
+  const tableTitle = () => {
+    if (typeof data[0].id === 'number') return 'Dancers';
+    if (typeof data[0].id === 'string') return 'Judges';
+    return 'Data Table'
+  }
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Table Title</CardTitle>
+        <CardTitle>{tableTitle()}</CardTitle>
       </CardHeader>
       <CardContent>
         <Table className="my-3">
