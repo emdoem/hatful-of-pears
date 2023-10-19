@@ -65,6 +65,13 @@ export function competitionCreatorReducer(
       if (dancers.length < state.competitionSetup.numberOfDancers) dancers.push(dancerToAdd);
       return { ...state, dancers };
     }
+    case "ADD_JUDGE": {
+      const judgeToAdd = action.data;
+      const judges = [...state.judges];
+      if (!judgeToAdd.id) return state;
+      if (judges.length < state.competitionSetup.numberOfJudges) judges.push(judgeToAdd);
+      return { ...state, judges }
+    }
     default:
       return state;
   }

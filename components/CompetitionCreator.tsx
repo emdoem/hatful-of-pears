@@ -10,9 +10,10 @@ import { competitionCreatorReducer, getCreatorStep, getCompetitionSetup, getComp
 import { initialState } from '@/lib/state_mgmt/competitionCreatorReducer';
 import { sampleJudges } from '../lib/helper_functions/sampleDataForCompetitionCreator';
 import { DancerValues } from '@/lib/types';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { CompetitionSetupCard } from './CompetitionSetupCard';
+import { getLetterFromNumber } from '../lib/helper_functions/getLetterFromNumber';
 
-type StartCompValues = typeof initialState.competitionSetup;
+export type StartCompValues = typeof initialState.competitionSetup;
 // actions?
 const goToStart = () => ({ type: "GO_TO_START", data: {} });
 const goToDancers = () => ({ type: "GO_TO_DANCERS", data: {} });
@@ -20,6 +21,8 @@ const goToJudges = () => ({ type: "GO_TO_JUDGES", data: {} });
 const goToScores = () => ({ type: "GO_TO_SCORES", data: {} });
 const startCompetition = (values: StartCompValues) => ({ type: "START_COMPETITION", data: { ...values } });
 const addDancer = (dancerToAdd: DancerValues) => ({ type: "ADD_DANCER", data: { ...dancerToAdd } });
+// judge type to be reworked?
+const addJudge = (judgeToAdd: { [property: string]: string }) => ({ type: "ADD_JUDGE", data: { ...judgeToAdd } });
 
 export default function CompetitionCreator() {
   const [creatorState, dispatch] = useReducer(competitionCreatorReducer, initialState);
@@ -28,12 +31,19 @@ export default function CompetitionCreator() {
   const competitionSetup = getCompetitionSetup(creatorState);
   const competitionType = getCompetitionType(creatorState);
   const numberOfDancers = getCompetitionSetup(creatorState).numberOfDancers;
-  const dancers = getDancers(creatorState); 
-  const judges = getJudges(creatorState); 
+  const numberOfJudges = getCompetitionSetup(creatorState).numberOfJudges;
+  const dancers = getDancers(creatorState);
+  const judges = getJudges(creatorState);
+  const judgeId = getLetterFromNumber(judges.length);
 
   useEffect(() => {
     const updatedDancers = getDancers(creatorState);
+    const updatedJudges = getJudges(creatorState);
+
     if ((updatedDancers.length === numberOfDancers) && (creatorStep === 'dancers')) {
+      goToNextStep();
+    }
+    if ((updatedJudges.length === numberOfJudges) && (creatorStep === 'judges')) {
       goToNextStep();
     }
   }, [creatorState]);
@@ -60,24 +70,31 @@ export default function CompetitionCreator() {
 
   const handleSubmitDancer = (values: any) => {
     dispatch(addDancer(values));
-    console.log('Dispatching addDancer action!');    
+    console.log('Dispatching addDancer action!');
+  }
+
+  const handleSubmitJudge = (values: any) => {
+    values.id = judgeId;
+    dispatch(addJudge(values));
   }
 
   return (
-    <main className='flex flex-col justify-center p-20'>
-      {(creatorStep === 'start') ? <InitializeCompetition handleSubmit={handleStart} /> : null}
-      {(creatorStep === 'dancers') ? <DancerInput
-        competitionType={getCompetitionSetup(creatorState).competitionType}
-        handleSubmit={handleSubmitDancer}
-        inputNumber={dancers.length + 1}
-      /> : null}
-      {(creatorStep === 'judges') ? <JudgeInput 
-        judgeNumber={judges.length + 1} 
-        handleSubmit={goToNextStep} 
-      /> : null}
-      {(creatorStep === 'scores') ? <ScoreInput judgeName={'Andreas Olsson'} numberOfPositions={6} handleSubmit={goToNextStep} /> : null}
-      {(competitionType != '') ? <CompetitionSetupCard competitionSetup={competitionSetup} /> : null}
-      <div className='flex flex-col'>
+    <main className='flex flex-row justify-center p-20'>
+      <div className='flex flex-col m-3'>
+        {(creatorStep === 'start') ? <InitializeCompetition handleSubmit={handleStart} /> : null}
+        {(creatorStep === 'dancers') ? <DancerInput
+          competitionType={getCompetitionSetup(creatorState).competitionType}
+          handleSubmit={handleSubmitDancer}
+          inputNumber={dancers.length + 1}
+        /> : null}
+        {(creatorStep === 'judges') ? <JudgeInput
+          judgeId={judgeId}
+          handleSubmit={handleSubmitJudge}
+        /> : null}
+        {(creatorStep === 'scores') ? <ScoreInput judgeName={'Andreas Olsson'} numberOfPositions={6} handleSubmit={goToNextStep} /> : null}
+        {(competitionType != '') ? <CompetitionSetupCard competitionSetup={competitionSetup} /> : null}
+      </div>
+      <div className='flex flex-col m-3'>
 
         {(dancers.length > 0) ? <ScoreTable data={dancers} /> : null}
         {(judges.length > 0) ? <ScoreTable data={judges} /> : null}
@@ -87,24 +104,3 @@ export default function CompetitionCreator() {
   )
 }
 
-function CompetitionSetupCard({
-  competitionSetup
-}: {
-  competitionSetup: StartCompValues
-}) {
-  const { competitionType, numberOfJudges, numberOfDancers } = competitionSetup
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Competition Setup</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p>
-          Competition type: {competitionType}<br />
-          number of judges: {numberOfJudges}<br />
-          number of couples / solo dancers: {numberOfDancers}
-        </p>
-      </CardContent>
-    </Card>
-  )
-}

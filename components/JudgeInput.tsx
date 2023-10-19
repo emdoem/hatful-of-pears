@@ -15,10 +15,10 @@ const FormSchema = z.object({
 });
 
 export function JudgeInput({
-    judgeNumber,
+    judgeId: judgeNumber,
     handleSubmit
 }: {
-    judgeNumber: number,
+    judgeId: string,
     handleSubmit: (values: z.infer<typeof FormSchema>) => void
 }) {
     const defaultValues = {
