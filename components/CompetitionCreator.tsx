@@ -36,6 +36,7 @@ export default function CompetitionCreator() {
   const judges = getJudges(creatorState);
   const judgeId = getLetterFromNumber(judges.length);
 
+  // progressing through iterative forms:
   useEffect(() => {
     const updatedDancers = getDancers(creatorState);
     const updatedJudges = getJudges(creatorState);
@@ -46,8 +47,10 @@ export default function CompetitionCreator() {
     if ((updatedJudges.length === numberOfJudges) && (creatorStep === 'judges')) {
       goToNextStep();
     }
+    // same for updatedScores
   }, [creatorState]);
 
+  // progressing through creator steps:
   const goToNextStep = () => {
     if (creatorStep === 'start') {
       dispatch(goToDancers());
@@ -62,6 +65,7 @@ export default function CompetitionCreator() {
     }
   }
 
+  // handlers for form submissions - these could be complex actions after implementing Redux + Thunk
   const handleStart = (values: any) => {
     dispatch(startCompetition(values));
     goToNextStep();
