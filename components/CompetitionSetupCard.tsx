@@ -1,6 +1,6 @@
 'use client';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { StartCompValues } from './CompetitionCreator';
+import { StartCompValues } from '../lib/state_mgmt/actions';
 
 export function CompetitionSetupCard({
   competitionSetup
