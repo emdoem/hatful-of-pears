@@ -14,6 +14,7 @@ type ScoreTableData = (typeof initialState.dancers) | (typeof initialState.judge
 export function ScoreTable({ data }: { data: ScoreTableData; }) {
   const tableColumns = [...Object.keys(data[0])];
   const tableTitle = () => {
+    // this is far from perfect since I have to rely on the state's shape:
     if (typeof data[0].id === 'number') return 'Dancers';
     if (typeof data[0].id === 'string') return 'Judges';
     return 'Data Table'
@@ -34,10 +35,10 @@ export function ScoreTable({ data }: { data: ScoreTableData; }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.map((dancer: any) => (
-              <TableRow>
+            {data.map((element: any) => (
+              <TableRow key={element.id}>
                 {tableColumns.map((property) => (
-                  <TableHead>{dancer[property]}</TableHead>
+                  <TableHead>{element[property]}</TableHead>
                 ))}
               </TableRow>
             ))}
