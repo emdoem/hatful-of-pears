@@ -1,5 +1,5 @@
 'use client';
-import { Dancer, FixedCouple, MixedCouple, DancerValues } from '../types';
+import { Dancer, FixedCouple, MixedCouple, DancerValues, FinalsScoreTable } from '../types';
 
 export const initialState: {
   creatorStep: 'start' | 'dancers' | 'judges' | 'scores';
@@ -8,9 +8,10 @@ export const initialState: {
     numberOfJudges: number;
     numberOfDancers: number;
   };
-  dancers: { [property: string]: string; }[];
+  dancers: { [property: string]: string; }[]; // wait, why doesn't this throw an error on submission?!
   // this should've been DancerValues[], but the shape is to complicated to narrow type in actions
-  judges: { [property: string]: string; }[];
+  judges: { [property: string]: string; }[],
+  scores: FinalsScoreTable
 } = {
   creatorStep: 'start',
   competitionSetup: {
@@ -19,7 +20,8 @@ export const initialState: {
     numberOfDancers: 0
   },
   dancers: [],
-  judges: []
+  judges: [],
+  scores: []
 };
 
 export function competitionCreatorReducer(
@@ -82,3 +84,4 @@ export const getCompetitionType = (state: typeof initialState) => state.competit
 export const getCompetitionSetup = (state: typeof initialState) => state.competitionSetup;
 export const getDancers = (state: typeof initialState) => state.dancers;
 export const getJudges = (state: typeof initialState) => state.judges;
+export const getScores = (state: typeof initialState) => state.scores;
