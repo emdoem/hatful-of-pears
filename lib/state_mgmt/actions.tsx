@@ -13,3 +13,4 @@ export const startCompetition = (values: StartCompValues) => ({ type: "START_COM
 export const addDancer = (dancerToAdd: DancerValues) => ({ type: "ADD_DANCER", data: { ...dancerToAdd } });
 // judge type to be reworked?
 export const addJudge = (judgeToAdd: { [property: string]: string; }) => ({ type: "ADD_JUDGE", data: { ...judgeToAdd } });
+export const addScore = (scoreToAdd:{ [property: string]: any; }) => ({ type: "ADD_SCORE", data: { ...scoreToAdd } })

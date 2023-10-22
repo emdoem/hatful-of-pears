@@ -8,10 +8,10 @@ export const initialState: {
     numberOfJudges: number;
     numberOfDancers: number;
   };
-  dancers: { [property: string]: string; }[]; // wait, why doesn't this throw an error on submission?!
+  dancers: { [property: string]: any; }[];
   // this should've been DancerValues[], but the shape is to complicated to narrow type in actions
   judges: { [property: string]: string; }[],
-  scores: FinalsScoreTable
+  scores: { [property: string]: any; }[]
 } = {
   creatorStep: 'start',
   competitionSetup: {
@@ -74,6 +74,13 @@ export function competitionCreatorReducer(
       if (judges.length < state.competitionSetup.numberOfJudges) judges.push(judgeToAdd);
       return { ...state, judges }
     }
+    case "ADD_SCORE": {
+      const scoreToAdd = action.data;
+      const scores = [...state.scores];
+      if (!scoreToAdd.id) return state;
+      if (scores.length < state.competitionSetup.numberOfJudges) scores.push(scoreToAdd);
+      return { ...state, scores }
+    }
     default:
       return state;
   }
@@ -83,5 +90,14 @@ export const getCreatorStep = (state: typeof initialState) => state.creatorStep;
 export const getCompetitionType = (state: typeof initialState) => state.competitionSetup.competitionType;
 export const getCompetitionSetup = (state: typeof initialState) => state.competitionSetup;
 export const getDancers = (state: typeof initialState) => state.dancers;
+export const getDancersWithScores = (state: typeof initialState) => {
+  const dancers = state.dancers.map((dancer) => ({ ...dancer }));
+  // getting scores corresponding to each dancer / couple
+  const scores = getScores(state);
+  scores.forEach(judge => {
+    dancers.forEach(dancer => dancer[judge.id] = Object.keys(judge).find(key => judge[key] === dancer.id));
+  })
+  return dancers;
+}
 export const getJudges = (state: typeof initialState) => state.judges;
 export const getScores = (state: typeof initialState) => state.scores;

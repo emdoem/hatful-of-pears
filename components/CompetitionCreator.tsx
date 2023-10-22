@@ -6,11 +6,11 @@ import { ScoreInput } from '@/components/ScoreInput';
 import { InitializeCompetition } from './InitializeCompetition';
 import { ScoreTable } from './ScoreTable';
 import { useEffect, useReducer } from 'react';
-import { competitionCreatorReducer, getCreatorStep, getCompetitionSetup, getCompetitionType, getDancers, getJudges, getScores } from '../lib/state_mgmt/competitionCreatorReducer';
+import { competitionCreatorReducer, getCreatorStep, getCompetitionSetup, getCompetitionType, getDancers, getJudges, getScores, getDancersWithScores } from '../lib/state_mgmt/competitionCreatorReducer';
 import { initialState } from '@/lib/state_mgmt/competitionCreatorReducer';
 import { CompetitionSetupCard } from './CompetitionSetupCard';
 import { getLetterFromNumber } from '../lib/helper_functions/getLetterFromNumber';
-import { goToDancers, goToJudges, goToScores, goToStart, startCompetition, addDancer, addJudge } from '../lib/state_mgmt/actions';
+import { goToDancers, goToJudges, goToScores, goToStart, startCompetition, addDancer, addJudge, addScore } from '../lib/state_mgmt/actions';
 
 export default function CompetitionCreator() {
   const [creatorState, dispatch] = useReducer(competitionCreatorReducer, initialState);
@@ -22,6 +22,7 @@ export default function CompetitionCreator() {
   const numberOfDancers = getCompetitionSetup(creatorState).numberOfDancers;
   const numberOfJudges = getCompetitionSetup(creatorState).numberOfJudges;
   const dancers = getDancers(creatorState);
+  const dancersWithScores = getDancersWithScores(creatorState);
   const judges = getJudges(creatorState);
   const judgeId = getLetterFromNumber(judges.length);
   const scores = getScores(creatorState);
@@ -78,12 +79,17 @@ export default function CompetitionCreator() {
 
   const handleSubmitScore = (values: { [property: string]: string }) => {
     let newValues: { [property: string]: any } = {};
+    // parsing scores from to string to numbers, because select field only accepts strings as values
     for (const property in values) {
-      newValues[property] = parseInt(property, 10)
+      newValues[property] = parseInt(values[property], 10)
     }
+    // adding id now (as a string) so it doesn't parse into a number
     newValues.id = scoreId;
-    // action dispatch here
-    console.log(newValues);
+    for (const property in values) {
+      // adding scores to dancer records? or should this be calculated inside state?
+    }
+    dispatch(addScore(newValues));
+    console.log(scores);
   }
 
   return (
@@ -109,7 +115,7 @@ export default function CompetitionCreator() {
       </div>
       <div className='flex flex-col m-3'>
 
-        {(dancers.length > 0) ? <ScoreTable data={dancers} /> : null}
+        {(dancers.length > 0) ? <ScoreTable data={dancersWithScores} /> : null}
         {(judges.length > 0) ? <ScoreTable data={judges} /> : null}
       </div>
 

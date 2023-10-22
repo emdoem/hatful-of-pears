@@ -38,26 +38,26 @@ export function ScoreInput({
     const FormSchema = z.object(schemaObject());
 
     // this is for testing purposes only
-    let defaultValues: { [property: string]: number } = {};
-    finalPositions.forEach((position, index) => {
-        defaultValues[position] = index + 1 
+    let defaultValues: { [property: string]: any } = {};
+    finalPositions.forEach((position) => {
+        defaultValues[position] = 'none' 
     })
     
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
-        // defaultValues: defaultValues
+        defaultValues: defaultValues
     });
 
     function onSubmit(values: z.infer<typeof FormSchema>) {
-        console.log(values);
-        console.log(form.formState);
+        // console.log(values);
         handleSubmit(values);
+        // form.reset(defaultValues);
     }
 
     // depndencies will probably have to be more specific
     useEffect(() => {
-        form.reset()
-    }, [form.formState])
+        form.reset();
+    }, [form.formState.submitCount])
 
     return (
         <Card>
@@ -77,15 +77,21 @@ export function ScoreInput({
                                         <FormLabel>{position} place</FormLabel>
                                         <Select onValueChange={field.onChange}>
                                             <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Please select a dancer / couple" {...field} />
+                                                <SelectTrigger 
+                                                    onChange={e => form.setValue(`${position}`, e.target)}
+                                                >
+                                                    <SelectValue 
+                                                        placeholder="Please select a dancer / couple" 
+                                                        {...field}
+                                                         
+                                                    />
                                                 </SelectTrigger>
                                             </FormControl>
-                                            <SelectContent>
-                                                <SelectItem key=' ' value='none'>None</SelectItem>
+                                            <SelectContent>                                                
                                                 {dancers.map(dancer => (
-                                                    <SelectItem key={dancer.id} value={`${dancer.id}`}>{Object.values(dancer).join(', ')}</SelectItem>
+                                                    <SelectItem key={`${dancer.id}`} value={`${dancer.id}`}>{Object.values(dancer).join(', ')}</SelectItem>
                                                 ))}
+                                                <SelectItem key='blank' value='none'>None</SelectItem>
                                             </SelectContent>
                                             
                                         </Select>
