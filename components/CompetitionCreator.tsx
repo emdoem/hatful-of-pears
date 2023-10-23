@@ -85,11 +85,7 @@ export default function CompetitionCreator() {
     }
     // adding id now (as a string) so it doesn't parse into a number
     newValues.id = scoreId;
-    for (const property in values) {
-      // adding scores to dancer records? or should this be calculated inside state?
-    }
     dispatch(addScore(newValues));
-    console.log(scores);
   }
 
   return (
@@ -116,7 +112,7 @@ export default function CompetitionCreator() {
       <div className='flex flex-col m-3'>
 
         {(dancers.length > 0) ? <ScoreTable data={dancersWithScores} /> : null}
-        {(judges.length > 0) ? <ScoreTable data={judges} /> : null}
+        {(judges.length > 0) ? <ScoreTable data={judges} className="max-w-md" /> : null}
       </div>
 
     </div>
