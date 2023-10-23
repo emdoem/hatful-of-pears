@@ -11,7 +11,13 @@ import { initialState } from "@/lib/state_mgmt/competitionCreatorReducer";
 
 type ScoreTableData = (typeof initialState.dancers) | (typeof initialState.judges);
 
-export function ScoreTable({ data }: { data: ScoreTableData; }) {
+export function ScoreTable({ 
+  data,
+  className,
+}: { 
+  data: ScoreTableData,
+  className?: string
+}) {
   const tableColumns = [...Object.keys(data[0])];
   const tableTitle = () => {
     // this is far from perfect since I have to rely on the state's shape:
@@ -21,7 +27,7 @@ export function ScoreTable({ data }: { data: ScoreTableData; }) {
   }
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>{tableTitle()}</CardTitle>
       </CardHeader>
