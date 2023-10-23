@@ -17,7 +17,7 @@ function Layout({
   children: React.ReactNode
 }) {
   return (
-    <div className='mt-10 bg-indigo-200'>
+    <div className='bg-gray-200'>
       {children}
     </div>
   )
