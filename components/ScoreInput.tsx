@@ -98,8 +98,8 @@ export function ScoreInput({
                                                     .filter(dancer => (!Object.values(selectedDancers).includes(dancer.id.toString()) || selectedDancers[position] === dancer.id.toString()))
                                                     .map(dancer => (
                                                         <SelectItem
-                                                            key={`${dancer.id}`}
-                                                            value={`${dancer.id}`}
+                                                            key={dancer.id.toString()}
+                                                            value={dancer.id.toString()}
                                                         >{Object.values(dancer).join(', ')}</SelectItem>
                                                     ))}
                                                 <SelectItem key='blank' value='none'>None</SelectItem>
