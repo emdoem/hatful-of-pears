@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from './ui/select';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from "zod";
@@ -27,6 +27,14 @@ export function ScoreInput({
         finalPositions.push(positions[i]);
     };
 
+    // using local state to control which dancers are displayed in select fields
+    const noneSelectedDancers: { [property: string]: any } = {}
+    const [selectedDancers, setSelectedDancers] = useState(noneSelectedDancers);
+    function onSelectDancer(field: any, dancerId: string) {
+        field.onChange(dancerId);
+        setSelectedDancers({...selectedDancers, [field.name]: dancerId})
+    }
+
     // schema needs to be defined after specifying number of scored positions
     const schemaObject = () => {
         let object: { [property: string]: any } = {}
@@ -40,9 +48,9 @@ export function ScoreInput({
     // this is for testing purposes only
     let defaultValues: { [property: string]: any } = {};
     finalPositions.forEach((position) => {
-        defaultValues[position] = 'none' 
+        defaultValues[position] = 'none'
     })
-    
+
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: defaultValues
@@ -54,15 +62,16 @@ export function ScoreInput({
         // form.reset(defaultValues);
     }
 
-    // depndencies will probably have to be more specific
+    // dependencies will probably have to be more specific
     useEffect(() => {
         form.reset();
+        setSelectedDancers([]);
     }, [form.formState.submitCount])
 
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Judge {judgeId}</CardTitle>
+                <CardTitle>Judge {judgeId} - scores:</CardTitle>
             </CardHeader>
             <CardContent>
                 <Form {...form}>
@@ -75,25 +84,27 @@ export function ScoreInput({
                                 render={({ field }) => (
                                     <FormItem className="my-5">
                                         <FormLabel>{position} place</FormLabel>
-                                        <Select onValueChange={field.onChange}>
+                                        <Select onValueChange={(value) => onSelectDancer(field, value)}>
                                             <FormControl>
-                                                <SelectTrigger 
-                                                    onChange={e => form.setValue(`${position}`, e.target)}
-                                                >
-                                                    <SelectValue 
-                                                        placeholder="Please select a dancer / couple" 
+                                                <SelectTrigger>
+                                                    <SelectValue
+                                                        placeholder="Please select a dancer / couple"
                                                         {...field}
-                                                         
                                                     />
                                                 </SelectTrigger>
                                             </FormControl>
-                                            <SelectContent>                                                
-                                                {dancers.map(dancer => (
-                                                    <SelectItem key={`${dancer.id}`} value={`${dancer.id}`}>{Object.values(dancer).join(', ')}</SelectItem>
-                                                ))}
+                                            <SelectContent>
+                                                {dancers
+                                                    .filter(dancer => (!Object.values(selectedDancers).includes(dancer.id.toString()) || selectedDancers[position] === dancer.id.toString()))
+                                                    .map(dancer => (
+                                                        <SelectItem
+                                                            key={`${dancer.id}`}
+                                                            value={`${dancer.id}`}
+                                                        >{Object.values(dancer).join(', ')}</SelectItem>
+                                                    ))}
                                                 <SelectItem key='blank' value='none'>None</SelectItem>
                                             </SelectContent>
-                                            
+
                                         </Select>
                                     </FormItem>
                                 )}
