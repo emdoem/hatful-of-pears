@@ -9,7 +9,7 @@ Eventually a mobile app (or app opened in phone's browser) would gather scores f
 
 CompetitionCreator component will handle state and will manage partial form components to gather data for the final calculations.
 
-Using shadcn UI components.
+Using shadcn UI components with zod and react-hook-form to handle form logic.
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
