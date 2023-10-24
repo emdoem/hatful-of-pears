@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { initialState } from "@/lib/state_mgmt/competitionCreatorReducer";
+import { Button } from "./ui/button";
 
 type ScoreTableData = (typeof initialState.dancers) | (typeof initialState.judges);
 
@@ -28,8 +29,9 @@ export function ScoreTable({
 
   return (
     <Card className={className}>
-      <CardHeader>
+      <CardHeader className="flex-row justify-between">
         <CardTitle>{tableTitle()}</CardTitle>
+        <Button variant='outline'>Edit</Button>
       </CardHeader>
       <CardContent>
         <Table className="my-3">
