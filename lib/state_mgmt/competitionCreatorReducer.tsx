@@ -2,7 +2,7 @@
 import { Dancer, FixedCouple, MixedCouple, DancerValues, FinalsScoreTable } from '../types';
 
 export const initialState: {
-  creatorStep: 'start' | 'dancers' | 'judges' | 'scores';
+  creatorStep: 'start' | 'dancers' | 'judges' | 'scores' | 'results';
   competitionSetup: {
     competitionType: '' | 'fixedCouples' | 'mixedCouples' | 'solo';
     numberOfJudges: number;
@@ -47,6 +47,9 @@ export function competitionCreatorReducer(
     }
     case "GO_TO_SCORES": {
       return { ...state, creatorStep: 'scores' };
+    }
+    case "GO_TO_RESULTS": {
+      return { ...state, creatorStep: 'results' };
     }
     case "START_COMPETITION": {
       if (!action.data.competitionType && !action.data.numberOfJudges && !action.data.numberOfDancers) return state;

@@ -9,6 +9,7 @@ export const goToStart = () => ({ type: "GO_TO_START", data: {} });
 export const goToDancers = () => ({ type: "GO_TO_DANCERS", data: {} });
 export const goToJudges = () => ({ type: "GO_TO_JUDGES", data: {} });
 export const goToScores = () => ({ type: "GO_TO_SCORES", data: {} });
+export const goToResults = () => ({ type: "GO_TO_RESULTS", data: {} });
 export const startCompetition = (values: StartCompValues) => ({ type: "START_COMPETITION", data: { ...values } });
 export const addDancer = (dancerToAdd: DancerValues) => ({ type: "ADD_DANCER", data: { ...dancerToAdd } });
 // judge type to be reworked?

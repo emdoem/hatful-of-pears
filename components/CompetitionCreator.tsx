@@ -10,7 +10,8 @@ import { competitionCreatorReducer, getCreatorStep, getCompetitionSetup, getComp
 import { initialState } from '@/lib/state_mgmt/competitionCreatorReducer';
 import { CompetitionSetupCard } from './CompetitionSetupCard';
 import { getLetterFromNumber } from '../lib/helper_functions/getLetterFromNumber';
-import { goToDancers, goToJudges, goToScores, goToStart, startCompetition, addDancer, addJudge, addScore } from '../lib/state_mgmt/actions';
+import { goToDancers, goToJudges, goToScores, goToStart, goToResults, startCompetition, addDancer, addJudge, addScore } from '../lib/state_mgmt/actions';
+import { ResultsCard } from './ResultsCard';
 
 export default function CompetitionCreator() {
   const [creatorState, dispatch] = useReducer(competitionCreatorReducer, initialState);
@@ -42,7 +43,7 @@ export default function CompetitionCreator() {
     }
     if ((updatedScores.length === numberOfJudges) && (creatorStep === 'scores')) {
       goToNextStep();
-    }  
+    }
   }, [creatorState]);
 
   // progressing through creator steps:
@@ -54,7 +55,7 @@ export default function CompetitionCreator() {
     } else if (creatorStep === 'judges') {
       dispatch(goToScores());
     } else if (creatorStep === 'scores') {
-      dispatch(goToStart());
+      dispatch(goToResults());
     } else {
       return null;
     }
@@ -101,21 +102,21 @@ export default function CompetitionCreator() {
           judgeId={judgeId}
           handleSubmit={handleSubmitJudge}
         /> : null}
-        {(creatorStep === 'scores') ? <ScoreInput 
-          judgeId={scoreId} 
-          numberOfPositions={getCompetitionSetup(creatorState).numberOfDancers} 
+        {(creatorStep === 'scores') ? <ScoreInput
+          judgeId={scoreId}
+          numberOfPositions={getCompetitionSetup(creatorState).numberOfDancers}
           dancers={dancers}
-          handleSubmit={handleSubmitScore} 
+          handleSubmit={handleSubmitScore}
         /> : null}
+        {(creatorStep === 'results') ? <ResultsCard scores={scores} /> : null}
         {(competitionType != '') ? <CompetitionSetupCard competitionSetup={competitionSetup} /> : null}
       </div>
       <div className='flex flex-col m-3'>
 
-        {(dancers.length > 0) ? <ScoreTable data={dancersWithScores} /> : null}
+        {(dancers.length > 0) ? <ScoreTable data={dancersWithScores} className="max-w-2xl" /> : null}
         {(judges.length > 0) ? <ScoreTable data={judges} className="max-w-md" /> : null}
       </div>
 
     </div>
   )
 }
-
