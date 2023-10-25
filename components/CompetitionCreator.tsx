@@ -12,6 +12,7 @@ import { CompetitionSetupCard } from './CompetitionSetupCard';
 import { getLetterFromNumber } from '../lib/helper_functions/getLetterFromNumber';
 import { goToDancers, goToJudges, goToScores, goToStart, goToResults, startCompetition, addDancer, addJudge, addScore } from '../lib/state_mgmt/actions';
 import { ResultsCard } from './ResultsCard';
+import ErrorBoundary from './ErrorBoundary';
 
 export default function CompetitionCreator() {
   const [creatorState, dispatch] = useReducer(competitionCreatorReducer, initialState);
@@ -108,7 +109,14 @@ export default function CompetitionCreator() {
           dancers={dancers}
           handleSubmit={handleSubmitScore}
         /> : null}
-        {(creatorStep === 'results') ? <ResultsCard scores={scores} /> : null}
+        {(creatorStep === 'results')
+          ? <ErrorBoundary>
+            <ResultsCard
+              scores={scores}
+              dancers={dancers}
+            />
+          </ErrorBoundary>
+          : null}
         {(competitionType != '') ? <CompetitionSetupCard competitionSetup={competitionSetup} /> : null}
       </div>
       <div className='flex flex-col m-3'>
