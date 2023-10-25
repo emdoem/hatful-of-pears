@@ -48,7 +48,7 @@ export function ScoreInput({
     // this is for testing purposes only
     let defaultValues: { [property: string]: any } = {};
     finalPositions.forEach((position) => {
-        defaultValues[position] = 'none'
+        defaultValues[position] = ''
     })
 
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -64,7 +64,7 @@ export function ScoreInput({
 
     // dependencies will probably have to be more specific
     useEffect(() => {
-        form.reset();
+        form.reset(defaultValues);
         setSelectedDancers([]);
     }, [form.formState.submitCount])
 
