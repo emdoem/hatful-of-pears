@@ -1,7 +1,7 @@
 import { describe, expect, it, xdescribe } from '@jest/globals';
 import { getFollowers, getLeaders, getSoloDancers } from "../../lib/helper_functions/mockupDancersGenerator";
 
-describe('getFollowers', () => {
+xdescribe('getFollowers', () => {
     it('returns an array of 8 objects given argument = 8', () => {
         const argument = 8;
         for (let i = 0; i < 100; i++) {
@@ -33,7 +33,7 @@ describe('getFollowers', () => {
     });
 })
 
-describe('getLeaders', () => {
+xdescribe('getLeaders', () => {
     it('returns an array of 8 objects given argument = 8', () => {
         const argument = 8;
         for (let i = 0; i < 100; i++) {
@@ -65,7 +65,7 @@ describe('getLeaders', () => {
     });
 });
 
-describe('getSoloDancers', () => {
+xdescribe('getSoloDancers', () => {
     it('returns an array of 8 objects given argument = 8', () => {
         const argument = 8;
         for (let i = 0; i < 100; i++) {

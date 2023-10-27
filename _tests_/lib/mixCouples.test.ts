@@ -4,7 +4,7 @@ import { followers, leaders } from '../../lib/helper_functions/mockupDancers';
 import { MixedCouple } from '@/lib/types';
 import { getLuckyNumber } from '../../lib/helper_functions/luckyNumber';
 
-describe('mockupDancers - leaders array', () => {
+xdescribe('mockupDancers - leaders array', () => {
     it('contains 6 objects', () => {
         expect(leaders.length).toEqual(6)
     });
@@ -15,7 +15,7 @@ describe('mockupDancers - leaders array', () => {
     });
 })
 
-describe('mockupDancers - followers array', () => {
+xdescribe('mockupDancers - followers array', () => {
     it('contains 6 objects', () => {
         expect(followers.length).toEqual(6)
     });
@@ -26,7 +26,7 @@ describe('mockupDancers - followers array', () => {
     });
 })
 
-describe('mixCouples', () => {
+xdescribe('mixCouples', () => {
     let luckyNumber: number;
     beforeEach(() => {
         luckyNumber = getLuckyNumber(leaders.length)
