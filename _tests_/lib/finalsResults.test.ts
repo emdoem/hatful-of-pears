@@ -70,6 +70,75 @@ describe('finalsResults ', () => {
             expect(outcome).toStrictEqual(expected);
         });
     });
+    describe('for a random score table', () => {
+        const inputScores = [
+            {
+                id: 'A',
+                scores: {
+                    '1st': 1,
+                    '2nd': 2,
+                    '3rd': 3,
+                    '4th': 4,
+                    '5th': 5,
+                    '6th': 6
+                }
+            },
+            {
+                id: 'B',
+                scores: {
+                    '1st': 2,
+                    '2nd': 1,
+                    '3rd': 4,
+                    '4th': 3,
+                    '5th': 6,
+                    '6th': 5
+                }
+            },
+            {
+                id: 'C',
+                scores: {
+                    '1st': 1,
+                    '2nd': 3,
+                    '3rd': 2,
+                    '4th': 4,
+                    '5th': 5,
+                    '6th': 6
+                }
+            },
+            {
+                id: 'D',
+                scores: {
+                    '1st': 2,
+                    '2nd': 1,
+                    '3rd': 4,
+                    '4th': 3,
+                    '5th': 6,
+                    '6th': 5
+                }
+            },
+            {
+                id: 'E',
+                scores: {
+                    '1st': 3,
+                    '2nd': 2,
+                    '3rd': 1,
+                    '4th': 6,
+                    '5th': 5,
+                    '6th': 4
+                }
+            },
+        ];
+        const results = finalsResults(inputScores);
+
+        it('presents a tie for 1st place', () => {
+            const expected = [1, 2];
+
+            const winner = results[0];
+
+            expect(winner).toStrictEqual(expected);
+        })
+
+    })
     describe('for a historical data sample I ', () => {
         const inputScores = [
             {

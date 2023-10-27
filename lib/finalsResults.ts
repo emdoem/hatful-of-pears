@@ -17,30 +17,30 @@ export function finalsResults(finalsScores: FinalsScoreTable) {
             // tiebreaker logic here
             if (i > 1) {
                 modeForI = findMode(positionScoreTable[i - 1])
-            } else {
+            } else if (positionScoreTable[n + 1]) {
                 modeForI = findMode(positionScoreTable[n + 1].filter(id => modeForI.includes(id)));
                 n++;
+            } else {
+                return modeForI;
             }
         }
-        // tie logic still missing
-        results[i] = modeForI[0];
-        positionScoreTable = removeDancerFromTable(results[i], positionScoreTable);
+
+        if (modeForI.length === 1) {
+            results[i] = modeForI[0];
+            positionScoreTable = removeDancerFromTable(results[i] as number, positionScoreTable);
+        } else {
+            results[i] = modeForI;
+            if (isArrayOfNumbers(results[i])) {
+                for (let j = 0; j < results[i].length; j++) {
+                    positionScoreTable = removeDancerFromTable(results[i][j], positionScoreTable);
+                }
+            }
+        }
     }
 
     return results;
 }
 
-/*
-const scoresForFirstPlace = finalsScores.map((dancer) => dancer['1-1']);
-    const indexForFirstPlace = findModeIndex(scoresForFirstPlace);
-    results = {
-        firstPlace: finalsScores[indexForFirstPlace].id,
-        secondPlace: null,
-        thirdPlace: null
-    };
-    if (podiumSize > 1) {
-        for (let i=1; i<podiumSize; i++) {
-            // logic for rest of podium positions
-        }
-    }
-*/
+function isArrayOfNumbers(arr: number | number[]): arr is number[] {
+    return Array.isArray(arr);
+}
