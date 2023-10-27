@@ -13,6 +13,7 @@ import { getLetterFromNumber } from '../lib/helper_functions/getLetterFromNumber
 import { goToDancers, goToJudges, goToScores, goToStart, goToResults, startCompetition, addDancer, addJudge, addScore } from '../lib/state_mgmt/actions';
 import { ResultsCard } from './ResultsCard';
 import ErrorBoundary from './ErrorBoundary';
+import { JudgeScoreTable } from '../lib/types'
 
 export default function CompetitionCreator() {
   const [creatorState, dispatch] = useReducer(competitionCreatorReducer, initialState);
@@ -80,10 +81,13 @@ export default function CompetitionCreator() {
   }
 
   const handleSubmitScore = (values: { [property: string]: string }) => {
-    let newValues: { [property: string]: any } = {};
+    let newValues: JudgeScoreTable = {
+      id: '',
+      scores: {}
+    };
     // parsing scores from to string to numbers, because select field only accepts strings as values
     for (const property in values) {
-      newValues[property] = parseInt(values[property], 10)
+      newValues.scores[property] = parseInt(values[property], 10)
     }
     // adding id now (as a string) so it doesn't parse into a number
     newValues.id = scoreId;

@@ -12,11 +12,11 @@ export type PositionScoreTable = number[][];
 }
 */
 
-export type FinalsResultsTable = number[]
+export type FinalsResultsTable = (number | number[])[]
 
 export type FinalsScoreTable = JudgeScoreTable[];
 
-type JudgeScoreTable = {
+export type JudgeScoreTable = {
     id: string,
     scores: {[position: string]: number}
 }
@@ -38,7 +38,7 @@ export type Dancer = {
     firstName: string,
     lastName: string,
     role: Role,
-    scores: {[judgeId: string]: number}
+    // scores: {[judgeId: string]: number} - this is unnecessary - scores will be derived from state by a selector
 };
 
 type Role = 'follower' | 'leader' | 'solo';

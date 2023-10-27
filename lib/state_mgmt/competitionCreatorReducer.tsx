@@ -1,5 +1,5 @@
 'use client';
-import { Dancer, FixedCouple, MixedCouple, DancerValues, FinalsScoreTable } from '../types';
+import { Dancer, FixedCouple, MixedCouple, DancerValues, FinalsScoreTable, JudgeScoreTable } from '../types';
 
 export const initialState: {
   creatorStep: 'start' | 'dancers' | 'judges' | 'scores' | 'results';
@@ -11,7 +11,7 @@ export const initialState: {
   dancers: { [property: string]: any; }[];
   // this should've been DancerValues[], but the shape is to complicated to narrow type in actions
   judges: { [property: string]: string; }[],
-  scores: { [property: string]: any; }[]
+  scores: FinalsScoreTable
 } = {
   creatorStep: 'start',
   competitionSetup: {
@@ -81,7 +81,7 @@ export function competitionCreatorReducer(
       const scoreToAdd = action.data;
       const scores = [...state.scores];
       if (!scoreToAdd.id) return state;
-      if (scores.length < state.competitionSetup.numberOfJudges) scores.push(scoreToAdd);
+      if (scores.length < state.competitionSetup.numberOfJudges) scores.push(scoreToAdd as JudgeScoreTable);
       return { ...state, scores }
     }
     default:
@@ -98,7 +98,7 @@ export const getDancersWithScores = (state: typeof initialState) => {
   // getting scores corresponding to each dancer / couple
   const scores = getScores(state);
   scores.forEach(judge => {
-    dancers.forEach(dancer => dancer[judge.id] = Object.keys(judge).find(key => judge[key] === dancer.id));
+    dancers.forEach(dancer => dancer[judge.id] = Object.keys(judge.scores).find(key => judge.scores[key] === dancer.id));
   })
   return dancers;
 }
