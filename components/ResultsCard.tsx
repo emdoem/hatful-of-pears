@@ -8,15 +8,20 @@ export function ResultsCard({
   scores,
   dancers
 }: {
-  scores: { [property: string]: any }[],
+  scores: FinalsScoreTable,
   dancers: { [property: string]: any }[]
 }) {  
-  const positions = [...Object.keys(scores[0])];
-  const resultsArray = finalsResults(scores as FinalsScoreTable);
+  const positions = [...Object.keys(scores[0].scores)];
+  const resultsArray = finalsResults(scores);
   const results: { [property: string]: any } = {};
   positions.forEach((position: string, index: number) => {
     results[position] = resultsArray[index];
   })
+
+  function getDancerInfoByPosition(position: number) {
+    const dancer = dancers.filter(dancer => dancer.id === results[position])[0]; // this returns null (or undefined?)
+    return Object.values(dancer).join(', ')
+  }
 
   return (
     <ErrorBoundary>
@@ -27,7 +32,7 @@ export function ResultsCard({
         <CardContent>
           {positions.map((position: string) => (
             <p key={position}>
-              {position}: {results[position]}, {dancers.filter(dancer => dancer.id === results[position])}
+              {position}: {results[position]}, 
             </p>
           ))}
         </CardContent>
@@ -36,3 +41,5 @@ export function ResultsCard({
 
   );
 }
+
+// {getDancerInfoByPosition(results[position])} - this throws an error, needs a fix
