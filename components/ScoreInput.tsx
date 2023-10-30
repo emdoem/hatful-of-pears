@@ -32,14 +32,14 @@ export function ScoreInput({
     const [selectedDancers, setSelectedDancers] = useState(noneSelectedDancers);
     function onSelectDancer(field: any, dancerId: string) {
         field.onChange(dancerId);
-        setSelectedDancers({...selectedDancers, [field.name]: dancerId})
+        setSelectedDancers({ ...selectedDancers, [field.name]: dancerId })
     }
 
     // schema needs to be defined after specifying number of scored positions
     const schemaObject = () => {
         let object: { [property: string]: any } = {}
         finalPositions.forEach(position => {
-            object[position] = z.string() // let's keep this simple and generate valid select options
+            object[position] = z.string() // let's keep this simple and have valid select options instead
         })
         return object;
     }
@@ -47,8 +47,13 @@ export function ScoreInput({
 
     // this is for testing purposes only
     let defaultValues: { [property: string]: any } = {};
+    let selectedDefaultValues: number[] = []
     finalPositions.forEach((position) => {
-        defaultValues[position] = ''
+        do {
+            defaultValues[position] = Math.ceil(Math.random() * numberOfPositions).toString();
+        } while (Object.values(selectedDefaultValues).includes(defaultValues[position]));
+        selectedDefaultValues.push(defaultValues[position]);
+        // console.log(defaultValues);
     })
 
     const form = useForm<z.infer<typeof FormSchema>>({
