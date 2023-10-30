@@ -10,31 +10,32 @@ export function finalsResults(finalsScores: FinalsScoreTable) {
 
     let results: FinalsResultsTable = [];
 
-    for (let i = 0; i < positionScoreTable.length; i++) {
-        let modeForI: number[] = findMode(positionScoreTable[i]);
-        let n = i;
-        while (modeForI.length > 1) {
-            // tiebreaker logic here
-            if (i > 1) {
-                modeForI = findMode(positionScoreTable[i - 1])
-            } else if (positionScoreTable[n + 1]) {
-                modeForI = findMode(positionScoreTable[n + 1].filter(id => modeForI.includes(id)));
-                n++;
+    for (let position = 0; position < positionScoreTable.length; position++) {
+        let modeForPosition: number[] = findMode(positionScoreTable[position]);
+        let pointerForTies = position;
+
+        while (modeForPosition.length > 1) {
+            if (position === 1 && positionScoreTable[pointerForTies + 1]) {
+                modeForPosition = findMode(positionScoreTable[pointerForTies + 1].filter(id => modeForPosition.includes(id)));
+                pointerForTies++;
+            } else if (position > 1 && positionScoreTable[pointerForTies - 1]) {
+                modeForPosition = findMode(positionScoreTable[pointerForTies - 1]);
+                pointerForTies--;
             } else {
-                return modeForI;
+                break;
             }
         }
 
-        if (modeForI.length === 1) {
-            results[i] = modeForI[0];
-            positionScoreTable = removeDancerFromTable(results[i] as number, positionScoreTable);
+        if (modeForPosition.length === 1) {
+            results[position] = modeForPosition[0];
+            positionScoreTable = removeDancerFromTable(results[position] as number, positionScoreTable);
         } else {
-            results[i] = modeForI;
-            if (isArrayOfNumbers(results[i])) {
-                for (let j = 0; j < results[i].length; j++) {
-                    positionScoreTable = removeDancerFromTable(results[i][j], positionScoreTable);
-                }
+            const tiedDancers = modeForPosition; // this is bonkers, but there's a typing issue with using results[position]
+            results[position] = modeForPosition;
+            for (let j = 0; j < tiedDancers.length; j++) {
+                positionScoreTable = removeDancerFromTable(tiedDancers[j], positionScoreTable);
             }
+
         }
     }
 
