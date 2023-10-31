@@ -8,10 +8,13 @@ Ideally, unit tests will serve as documentation for the business logic.
 Eventually a mobile app (or app opened in phone's browser) would gather scores from judges directly and results could go live to users visiting app as guests.
 
 CompetitionCreator component will handle state and will manage partial form components to gather data for the final calculations.
+ScoreTable is a reusable component that will eventually handle editing data that was already input.
+ScoreInput is a form component that will eventually become user interface for the judges - the crucial part is to allow assigning each position once (no ties from a single judge).
 
 Using shadcn UI components with zod and react-hook-form to handle form logic.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). 
+This was probably an overkill, as Next.js isn't the first choice for Single Page Apps, but I hoped to expand the functionality later on.
 
 ## Getting Started
 
