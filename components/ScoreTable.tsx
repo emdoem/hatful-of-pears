@@ -9,6 +9,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { initialState } from "@/lib/state_mgmt/competitionCreatorReducer";
 import { Button } from "./ui/button";
+import { useState } from "react";
 
 type ScoreTableData = (typeof initialState.dancers) | (typeof initialState.judges);
 
@@ -46,7 +47,7 @@ export function ScoreTable({
             {data.map((element: any) => (
               <TableRow key={element.id}>
                 {tableColumns.map((property) => (
-                  <TableHead>{element[property]}</TableHead>
+                  <TableCellEditable>{element[property]}</TableCellEditable>
                 ))}
               </TableRow>
             ))}
@@ -56,4 +57,22 @@ export function ScoreTable({
 
     </Card>
   );
+}
+
+// actually let's move all the display logic back to the table...?
+function TableCellEditable({  
+  children
+}: {
+  children: any
+}) {
+  const [isEdited, setIsEdited] = useState(false);
+
+  return (
+    <>
+      {isEdited 
+        ? <Button variant='outline' onClick={() => setIsEdited(false)}>This cell is being isEdited.</Button> 
+        : <TableCell onClick={() => setIsEdited(true)}>{children}</TableCell>
+      }
+    </>    
+  )
 }
