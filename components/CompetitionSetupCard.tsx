@@ -3,13 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { StartCompValues } from '../lib/state_mgmt/actions';
 
 export function CompetitionSetupCard({
-  competitionSetup
+  competitionSetup,
+  className
 }: {
-  competitionSetup: StartCompValues;
+  competitionSetup: StartCompValues,
+  className?: string
 }) {
   const { competitionType, numberOfJudges, numberOfDancers } = competitionSetup;
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>Competition Setup</CardTitle>
       </CardHeader>

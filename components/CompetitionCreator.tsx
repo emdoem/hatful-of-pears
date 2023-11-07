@@ -95,8 +95,8 @@ export default function CompetitionCreator() {
   }
 
   return (
-    <div className='flex flex-row justify-start p-20'>
-      <div className='flex flex-col m-3'>
+    <div className='flex sm:flex-col md:flex-row justify-center p-20'>
+      <div className='flex sm:flex-row md:flex-col mx-3'>
         {(creatorStep === 'start') ? <InitializeCompetition handleSubmit={handleStart} /> : null}
         {(creatorStep === 'dancers') ? <DancerInput
           competitionType={getCompetitionSetup(creatorState).competitionType}
@@ -121,9 +121,12 @@ export default function CompetitionCreator() {
             />
           </ErrorBoundary>
           : null}
-        {(competitionType != '') ? <CompetitionSetupCard competitionSetup={competitionSetup} /> : null}
+        {(competitionType != '') 
+          ? <CompetitionSetupCard competitionSetup={competitionSetup} className='sm:ml-6 md:ml-0' /> 
+          : null
+        }
       </div>
-      <div className='flex flex-col m-3'>
+      <div className='flex flex-col mx-3'>
 
         {(dancers.length > 0) ? <ScoreTable data={dancersWithScores} className="max-w-2xl" /> : null}
         {(judges.length > 0) ? <ScoreTable data={judges} className="max-w-md" /> : null}

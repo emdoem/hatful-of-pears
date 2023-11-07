@@ -73,7 +73,7 @@ export function JudgeInput({
                             )}
                         />
                         <div className='flex justify-between'>
-                            <Button type="submit">Add to competition</Button>
+                            <Button type="submit" className='mr-5'>Add</Button>
                             <Button variant='secondary' disabled>Random</Button>
                         </div>
                     </form>
