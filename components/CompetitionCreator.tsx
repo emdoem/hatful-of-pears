@@ -122,7 +122,7 @@ export default function CompetitionCreator() {
           </ErrorBoundary>
           : null}
         {(competitionType != '') 
-          ? <CompetitionSetupCard competitionSetup={competitionSetup} className='ml-6 lg:ml-0 min-w-auto' /> 
+          ? <CompetitionSetupCard competitionSetup={competitionSetup} className='ml-6 lg:ml-0' /> 
           : null
         }
       </div>
