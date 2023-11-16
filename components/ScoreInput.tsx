@@ -48,9 +48,10 @@ export function ScoreInput({
     // this is for testing purposes only
     let defaultValues: { [property: string]: any } = {};
     let selectedDefaultValues: number[] = []
+    const dancerIds = dancers.map(dancer => dancer.id);
     finalPositions.forEach((position) => {
         do {
-            defaultValues[position] = Math.ceil(Math.random() * numberOfPositions).toString();
+            defaultValues[position] = dancerIds[Math.floor(Math.random() * numberOfPositions)].toString();
         } while (Object.values(selectedDefaultValues).includes(defaultValues[position]));
         selectedDefaultValues.push(defaultValues[position]);
         // console.log(defaultValues);

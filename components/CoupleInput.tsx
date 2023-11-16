@@ -23,7 +23,7 @@ export function CoupleInput({
     coupleNumber: number;
 }) {
     const defaultValues = {
-        id: coupleNumber, 
+        id: coupleNumber + 100, 
         followerName: `Follower's name`,
         leaderName: `Leader's name`
     }
