@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export function WelcomeCard({ siteTitle }: { [prop: string]: any }) {
     return (
-        <Card className='m-20 max-w-md min-w-full'>
+        <Card className='m-20 max-w-lg'>
             <CardHeader className='flex flex-row justify-between'>
                 <div>
                     <img src="/img/hatful_logo.png" className='max-w-md' alt='hatful logo' width={250} height={100} />
