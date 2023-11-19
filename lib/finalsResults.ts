@@ -1,9 +1,3 @@
-import { FinalsResultsTable, FinalsScoreTable, PositionScoreTable } from "./types";
-import { mode as findMode } from './helper_functions/mode';
-import { aggregateScores } from "./helper_functions/aggregateScores";
-import { scoresToTable } from "./helper_functions/scoresToTable";
-import { removeDancerFromTable } from "./helper_functions/removeDancerFromTable";
-
 type ScoresTable = DancerScores[];
 type DancerScores = {
     id: string,
@@ -99,7 +93,7 @@ export function finalsResults(
 
         results.push(dancerForPosition.map(dancer => dancer.id)); 
         const scoresTableForNextPos = filterOutPlacedDancers(scoresTable, results);            
-        finalsResults(scoresTableForNextPos, results);
+        results = finalsResults(scoresTableForNextPos, results);
     }
     return results;
 }
