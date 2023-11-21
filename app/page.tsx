@@ -1,8 +1,11 @@
-import Head from 'next/head'; // to be replaced with metadata object from layout.tsx
+import Head from 'next/head';
 import Layout, { siteTitle } from './layout';
 import { WelcomeCard } from '../components/WelcomeCard';
+import dynamic from 'next/dynamic';
 
-export default function Home() {
+// const WCNoSSR = dynamic(() => import('../components/WelcomeCard'), { ssr: false }) - this throws a type error...
+
+export default function Home() {   
     return (
         <Layout>
             <Head>
