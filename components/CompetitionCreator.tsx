@@ -2,7 +2,7 @@
 
 import { DancerInput } from '@/components/DancerInput';
 import { JudgeInput } from '@/components/JudgeInput';
-import { ScoreInput } from '@/components/ScoreInput';
+import { ScoreInput } from '@/components/ScoreInput_forDancers_pure';
 import { InitializeCompetition } from './InitializeCompetition';
 import { ScoreTable } from './ScoreTable';
 import { useEffect, useReducer } from 'react';
@@ -109,7 +109,6 @@ export default function CompetitionCreator() {
         /> : null}
         {(creatorStep === 'scores') ? <ScoreInput
           judgeId={scoreId}
-          numberOfPositions={getCompetitionSetup(creatorState).numberOfDancers}
           dancers={dancers}
           handleSubmit={handleSubmitScore}
         /> : null}
