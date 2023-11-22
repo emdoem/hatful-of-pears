@@ -80,18 +80,12 @@ export default function CompetitionCreator() {
     dispatch(addJudge(values));
   }
 
-  const handleSubmitScore = (values: { [property: string]: string }) => {
-    let newValues: JudgeScoreTable = {
-      id: '',
-      scores: {}
-    };
-    // parsing scores from to string to numbers, because select field only accepts strings as values
-    for (const property in values) {
-      newValues.scores[property] = parseInt(values[property], 10)
-    }
-    // adding id now (as a string) so it doesn't parse into a number
-    newValues.id = scoreId;
-    dispatch(addScore(newValues));
+  const handleSubmitScore = (scores: Record<string, string>) => {
+    let scoresToAdd = {
+      id: scoreId,
+      scores
+    };    
+    dispatch(addScore(scoresToAdd));
   }
 
   return (

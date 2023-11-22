@@ -8,10 +8,10 @@ export const initialState: {
     numberOfJudges: number;
     numberOfDancers: number;
   };
-  dancers: { [property: string]: any; }[];
+  dancers: Record<string, any>[];
   // this should've been DancerValues[], but the shape is to complicated to narrow type in actions
-  judges: { [property: string]: string; }[],
-  scores: FinalsScoreTable
+  judges: Record<string, string>[],
+  scores: Record<string, string>[]
 } = {
   creatorStep: 'start',
   competitionSetup: {
@@ -64,7 +64,7 @@ export function competitionCreatorReducer(
       let areIdsUnique = true;
       dancers.forEach(dancer => (dancer.id === dancerToAdd.id) ? areIdsUnique = false : null);
       if (!areIdsUnique) {
-        console.log('Ids must be unique!');
+        console.log('Ids must be unique!'); // this should be a pop up message?
         return state;
       }
       if (dancers.length < state.competitionSetup.numberOfDancers) dancers.push(dancerToAdd);
@@ -80,8 +80,7 @@ export function competitionCreatorReducer(
     case "ADD_SCORE": {
       const scoreToAdd = action.data;
       const scores = [...state.scores];
-      if (!scoreToAdd.id) return state;
-      if (scores.length < state.competitionSetup.numberOfJudges) scores.push(scoreToAdd as JudgeScoreTable);
+      if (scores.length < state.competitionSetup.numberOfJudges) scores.push(scoreToAdd);
       return { ...state, scores }
     }
     default:
@@ -94,11 +93,12 @@ export const getCompetitionType = (state: typeof initialState) => state.competit
 export const getCompetitionSetup = (state: typeof initialState) => state.competitionSetup;
 export const getDancers = (state: typeof initialState) => state.dancers;
 export const getDancersWithScores = (state: typeof initialState) => {
+  // create a copy of 'dancers':
   const dancers = state.dancers.map((dancer) => ({ ...dancer }));
-  // getting scores corresponding to each dancer / couple
+  // getting scores corresponding to each dancer / couple:
   const scores = getScores(state);
-  scores.forEach(judge => {
-    dancers.forEach(dancer => dancer[judge.id] = Object.keys(judge.scores).find(key => judge.scores[key] === dancer.id));
+  scores.forEach(judge => {    
+    dancers.forEach(dancer => dancer[judge.id] = judge.scores[dancer.id]);
   })
   return dancers;
 }

@@ -8,7 +8,7 @@ export function ResultsCard({
   scores,
   dancers
 }: {
-  scores: FinalsScoreTable,
+  scores: any,
   dancers: { [property: string]: any }[]
 }) {  
   const positions = [...Object.keys(scores[0].scores)];

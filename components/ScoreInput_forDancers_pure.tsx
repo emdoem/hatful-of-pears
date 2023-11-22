@@ -41,6 +41,8 @@ export function ScoreInput({
     
         console.log('Form data submitted:', formDataObject);
         // Perform any additional actions, like sending data to the server
+        handleSubmit(formDataObject);
+        event.currentTarget.reset();
       };
 
     return (
