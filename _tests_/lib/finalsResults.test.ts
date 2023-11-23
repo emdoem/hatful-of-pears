@@ -1,6 +1,5 @@
 import { describe, xdescribe, expect, it, beforeEach } from '@jest/globals';
 import { finalsResults } from '../../lib/finalsResults';
-import { FinalsResultsTable } from '@/lib/types';
 
 describe('finalsResults ', () => {       
     describe('for a random score table I', () => {
