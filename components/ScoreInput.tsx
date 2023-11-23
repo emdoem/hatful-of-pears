@@ -1,78 +1,69 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from './ui/select';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from "zod";
-import { Form, FormLabel, FormField, FormItem, FormControl, FormDescription } from '@/components/ui/form'
+import { Label } from './ui/label';
+import { Button } from './ui/button';
+import { useState, useRef } from 'react';
 
 const positions: string[] = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th'];
 
-
-
 export function ScoreInput({
     judgeId,
-    numberOfPositions,
     dancers,
     handleSubmit
 }: {
     judgeId: string,
-    numberOfPositions: number,
-    dancers: { [property: string]: any; }[], // typing for dancers needs to be cleaned up
+    dancers: Record<string, string>[], // Record is so much fancier than what I used before
     handleSubmit: (values: any) => void // can't type values before defining the schema
 }) {
-    let finalPositions: string[] = [];
-    for (let i = 0; i < numberOfPositions; i++) {
+    const formRef = useRef<HTMLFormElement | null>(null);
+    const finalPositions: string[] = [];
+    for (let i = 0; i < dancers.length; i++) {
         finalPositions.push(positions[i]);
     };
 
     // using local state to control which dancers are displayed in select fields
-    const noneSelectedDancers: { [property: string]: any } = {}
-    const [selectedDancers, setSelectedDancers] = useState(noneSelectedDancers);
-    function onSelectDancer(field: any, dancerId: string) {
-        field.onChange(dancerId);
-        setSelectedDancers({ ...selectedDancers, [field.name]: dancerId })
+    const noneSelectedPositions: Record<string, string> = {}
+    const [selectedPositions, setSelectedPositions] = useState(noneSelectedPositions);
+    function onSelectPosition(event: React.ChangeEvent<HTMLSelectElement>) {
+        const { name, value } = event.target
+        setSelectedPositions({ ...selectedPositions, [name]: value })
     }
 
-    // schema needs to be defined after specifying number of scored positions
-    const schemaObject = () => {
-        let object: { [property: string]: any } = {}
-        finalPositions.forEach(position => {
-            object[position] = z.string() // let's keep this simple and have valid select options instead
+    // useEffect to reset selectedPositions
+
+    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+
+        // Convert FormData to an object for easier handling
+        const formDataObject: Record<string, number> = {};
+        formData.forEach((value, key) => {
+            formDataObject[key] = parseInt(value.toString()[0]);
+        });
+
+        console.log('Form data submitted:', formDataObject);
+        // Perform any additional actions, like sending data to the server
+        handleSubmit(formDataObject);
+        event.currentTarget.reset();
+        setSelectedPositions({});
+    };
+
+    const onRandomize = () => {
+        const randomValues: Record<string, number> = {};
+        const selectedRandomValues: number[] = [];
+        dancers.forEach(dancer => {
+            do {
+                randomValues[dancer.id] = Math.ceil(Math.random() * finalPositions.length);
+            } while (selectedRandomValues.includes(randomValues[dancer.id]));
+            selectedRandomValues.push(randomValues[dancer.id]);
         })
-        return object;
+        console.log(randomValues);
+        handleSubmit(randomValues);
+        if (formRef.current) {
+            formRef.current.reset();
+        }
+        setSelectedPositions({});
     }
-    const FormSchema = z.object(schemaObject());
-
-    // this is for testing purposes only
-    let defaultValues: { [property: string]: any } = {};
-    let selectedDefaultValues: number[] = []
-    const dancerIds = dancers.map(dancer => dancer.id);
-    finalPositions.forEach((position) => {
-        do {
-            defaultValues[position] = dancerIds[Math.floor(Math.random() * numberOfPositions)].toString();
-        } while (Object.values(selectedDefaultValues).includes(defaultValues[position]));
-        selectedDefaultValues.push(defaultValues[position]);
-        // console.log(defaultValues);
-    })
-
-    const form = useForm<z.infer<typeof FormSchema>>({
-        resolver: zodResolver(FormSchema),
-        defaultValues: defaultValues
-    });
-
-    function onSubmit(values: z.infer<typeof FormSchema>) {
-        // console.log(values);
-        handleSubmit(values);
-        // form.reset(defaultValues);
-    }
-
-    // dependencies will probably have to be more specific
-    useEffect(() => {
-        form.reset(defaultValues);
-        setSelectedDancers([]);
-    }, [form.formState.submitCount])
 
     return (
         <Card>
@@ -80,49 +71,34 @@ export function ScoreInput({
                 <CardTitle>Judge {judgeId} - scores:</CardTitle>
             </CardHeader>
             <CardContent>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
-                        {finalPositions.map((position) => (
-                            <FormField
-                                control={form.control}
-                                key={position}
-                                name={position}
-                                render={({ field }) => (
-                                    <FormItem className="my-5">
-                                        <FormLabel>{position} place</FormLabel>
-                                        <Select onValueChange={(value) => onSelectDancer(field, value)}>
-                                            <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue
-                                                        placeholder="Please select a dancer / couple"
-                                                        {...field}
-                                                    />
-                                                </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {dancers
-                                                    .filter(dancer => (!Object.values(selectedDancers).includes(dancer.id.toString()) || selectedDancers[position] === dancer.id.toString()))
-                                                    .map(dancer => (
-                                                        <SelectItem
-                                                            key={dancer.id.toString()}
-                                                            value={dancer.id.toString()}
-                                                        >{Object.values(dancer).join(', ')}</SelectItem>
-                                                    ))}
-                                                <SelectItem key='blank' value='none'>None</SelectItem>
-                                            </SelectContent>
-
-                                        </Select>
-                                    </FormItem>
-                                )}
-                            />
-                        ))}
-                        <div className='flex justify-between'>
-                            <Button type='submit'>Submit</Button>
-                            <Button variant='secondary' onClick={form.reset}>Randomize</Button>
+                <form onSubmit={onSubmit}>
+                    {dancers.map(dancer => (
+                        <div key={dancer.id} className='my-5'>
+                            <Label className='py-1.5 pr-2 text-sm font-semibold'>Position for dancer {dancer.id}</Label>
+                            <select
+                                name={dancer.id}
+                                id={dancer.id}
+                                onChange={onSelectPosition}
+                                className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                                <option value="">Please select a scoring</option>
+                                {finalPositions
+                                    .filter(position => (!Object.values(selectedPositions).includes(position)) || selectedPositions[dancer.id] === position)
+                                    .map(position => (
+                                        <option
+                                            key={position}
+                                            value={position}
+                                        >{position} place</option>
+                                    ))}
+                            </select>
                         </div>
-                    </form>
-                </Form>
+                    ))}
+                    <div className='flex justify-between'>
+                        <Button type='submit'>Submit</Button>
+                        <Button type='button' variant='secondary' onClick={onRandomize}>Randomize</Button>
+                    </div>
+                </form>
             </CardContent>
         </Card>
-    );
+    )
 }
