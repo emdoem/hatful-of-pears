@@ -15,10 +15,7 @@ export function ScoreInput({
     handleSubmit: (values: any) => void // can't type values before defining the schema
 }) {
     const formRef = useRef<HTMLFormElement | null>(null);
-    const finalPositions: string[] = [];
-    for (let i = 0; i < dancers.length; i++) {
-        finalPositions.push(positions[i]);
-    };
+    const finalPositions = positions.slice(0, dancers.length);
 
     // using local state to control which dancers are displayed in select fields
     const noneSelectedPositions: Record<string, string> = {}
@@ -63,7 +60,7 @@ export function ScoreInput({
             formRef.current.reset();
         }
         setSelectedPositions({});
-    }
+    };
 
     return (
         <Card>
@@ -71,14 +68,15 @@ export function ScoreInput({
                 <CardTitle>Judge {judgeId} - scores:</CardTitle>
             </CardHeader>
             <CardContent>
-                <form onSubmit={onSubmit}>
+                <form onSubmit={onSubmit} ref={formRef}>
                     {dancers.map(dancer => (
                         <div key={dancer.id} className='my-5'>
-                            <Label className='py-1.5 pr-2 text-sm font-semibold'>Position for dancer {dancer.id}</Label>
+                            <Label className='py-1.5 pr-2 text-sm font-semibold my-5'>Position for dancer {dancer.id}</Label>
                             <select
                                 name={dancer.id}
                                 id={dancer.id}
                                 onChange={onSelectPosition}
+                                required
                                 className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 <option value="">Please select a scoring</option>

@@ -43,3 +43,17 @@ export type Dancer = {
 
 type Role = 'follower' | 'leader' | 'solo';
 export type DancerValues = Dancer | MixedCouple | FixedCouple;
+
+export type ScoresTable = DancerScores[];
+export type DancerScores = {
+    id: string;
+    scores: number[];
+    calculated?: number;
+    position?: number;
+};
+export type DancerScoresCalculated = {
+    id: string;
+    scores: number[];
+    calculated: number;
+    position?: number;
+};

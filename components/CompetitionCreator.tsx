@@ -6,7 +6,7 @@ import { ScoreInput } from '@/components/ScoreInput';
 import { InitializeCompetition } from './InitializeCompetition';
 import { ScoreTable } from './ScoreTable';
 import { useEffect, useReducer } from 'react';
-import { competitionCreatorReducer, getCreatorStep, getCompetitionSetup, getCompetitionType, getDancers, getJudges, getScores, getDancersWithScores } from '../lib/state_mgmt/competitionCreatorReducer';
+import { competitionCreatorReducer, getCreatorStep, getCompetitionSetup, getCompetitionType, getDancers, getJudges, getScores, getDancersWithScores, getScoresForResults } from '../lib/state_mgmt/competitionCreatorReducer';
 import { initialState } from '@/lib/state_mgmt/competitionCreatorReducer';
 import { CompetitionSetupCard } from './CompetitionSetupCard';
 import { getLetterFromNumber } from '../lib/helper_functions/getLetterFromNumber';
@@ -29,6 +29,7 @@ export default function CompetitionCreator() {
   const judgeId = getLetterFromNumber(judges.length);
   const scores = getScores(creatorState);
   const scoreId = getLetterFromNumber(scores.length);
+  const scoresForResults = getScoresForResults(creatorState);
 
   // progressing through iterative forms:
   useEffect(() => {
@@ -103,7 +104,7 @@ export default function CompetitionCreator() {
         {(creatorStep === 'results')
           ? <ErrorBoundary>
             <ResultsCard
-              scores={scores}
+              scores={scoresForResults}
               dancers={dancers}
             />
           </ErrorBoundary>

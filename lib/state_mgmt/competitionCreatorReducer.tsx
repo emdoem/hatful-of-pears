@@ -1,5 +1,5 @@
 'use client';
-import { Dancer, FixedCouple, MixedCouple, DancerValues, FinalsScoreTable, JudgeScoreTable } from '../types';
+import { Dancer, FixedCouple, MixedCouple, DancerValues, FinalsScoreTable, JudgeScoreTable, ScoresTable, DancerScores } from '../types';
 import { getLetterFromNumber } from '../helper_functions/getLetterFromNumber';
 
 export const initialState: {
@@ -72,7 +72,7 @@ export function competitionCreatorReducer(
       return { ...state, dancers };
     }
     case "ADD_JUDGE": {
-      const judgeToAdd = action.data;      
+      const judgeToAdd = action.data;
       const judges = [...state.judges];
       judgeToAdd.id = getLetterFromNumber(judges.length);
       if (judges.length < state.competitionSetup.numberOfJudges) judges.push(judgeToAdd);
@@ -102,10 +102,21 @@ export const getDancersWithScores = (state: typeof initialState) => {
   const dancers = state.dancers.map((dancer) => ({ ...dancer }));
   // getting scores corresponding to each dancer / couple:
   const scores = getScores(state);
-  scores.forEach(judge => {    
+  scores.forEach(judge => {
     dancers.forEach(dancer => dancer[judge.id] = judge.scores[dancer.id]);
   })
   return dancers;
+}
+export const getScoresForResults = (state: typeof initialState) => {
+  const scoresTable: ScoresTable = state.dancers.map(dancer => {
+    const scoresForDancer = state.scores.map(judgeScore => judgeScore.scores[dancer.id])
+    const dancerScores: DancerScores =  {
+      id: dancer.id,
+      scores: scoresForDancer
+    }
+    return dancerScores;
+  });
+  return scoresTable;
 }
 export const getJudges = (state: typeof initialState) => state.judges;
 export const getScores = (state: typeof initialState) => state.scores;

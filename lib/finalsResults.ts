@@ -1,16 +1,4 @@
-type ScoresTable = DancerScores[];
-type DancerScores = {
-    id: string,
-    scores: number[],
-    calculated?: number,
-    position?: number
-}
-type DancerScoresCalculated = {
-    id: string,
-    scores: number[],
-    calculated: number,
-    position?: number
-}
+import { DancerScores, DancerScoresCalculated, ScoresTable } from "./types";
 
 function calculateScores(
     dancerScores: DancerScores, 
