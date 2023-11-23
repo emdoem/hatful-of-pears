@@ -1,17 +1,18 @@
 'use client';
 import { Dancer, FixedCouple, MixedCouple, DancerValues, FinalsScoreTable, JudgeScoreTable } from '../types';
+import { getLetterFromNumber } from '../helper_functions/getLetterFromNumber';
 
 export const initialState: {
-  creatorStep: 'start' | 'dancers' | 'judges' | 'scores' | 'results';
+  creatorStep: 'start' | 'dancers' | 'judges' | 'scores' | 'results',
   competitionSetup: {
-    competitionType: '' | 'fixedCouples' | 'mixedCouples' | 'solo';
-    numberOfJudges: number;
-    numberOfDancers: number;
-  };
-  dancers: Record<string, any>[];
+    competitionType: '' | 'fixedCouples' | 'mixedCouples' | 'solo',
+    numberOfJudges: number,
+    numberOfDancers: number,
+  },
+  dancers: Record<string, any>[],
   // this should've been DancerValues[], but the shape is to complicated to narrow type in actions
   judges: Record<string, string>[],
-  scores: Record<string, string>[]
+  scores: Record<string, any>[]
 } = {
   creatorStep: 'start',
   competitionSetup: {
@@ -27,8 +28,8 @@ export const initialState: {
 export function competitionCreatorReducer(
   state: typeof initialState,
   action: {
-    type: string;
-    data: { [property: string]: any } // Partial<typeof initialState>; - still have to do type narrowing for actions
+    type: string,
+    data: Record<string, any> // Partial<typeof initialState>; - still have to do type narrowing for actions
   }
 ): typeof initialState {
   if (typeof state === 'undefined') {
@@ -71,15 +72,19 @@ export function competitionCreatorReducer(
       return { ...state, dancers };
     }
     case "ADD_JUDGE": {
-      const judgeToAdd = action.data;
+      const judgeToAdd = action.data;      
       const judges = [...state.judges];
-      if (!judgeToAdd.id) return state;
+      judgeToAdd.id = getLetterFromNumber(judges.length);
       if (judges.length < state.competitionSetup.numberOfJudges) judges.push(judgeToAdd);
       return { ...state, judges }
     }
     case "ADD_SCORE": {
-      const scoreToAdd = action.data;
+      const scoreToAdd: Record<string, any> = {
+        id: null,
+        scores: action.data
+      };
       const scores = [...state.scores];
+      scoreToAdd.id = getLetterFromNumber(scores.length)
       if (scores.length < state.competitionSetup.numberOfJudges) scores.push(scoreToAdd);
       return { ...state, scores }
     }

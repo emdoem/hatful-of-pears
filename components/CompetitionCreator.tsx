@@ -2,7 +2,7 @@
 
 import { DancerInput } from '@/components/DancerInput';
 import { JudgeInput } from '@/components/JudgeInput';
-import { ScoreInput } from '@/components/ScoreInput_forDancers_pure';
+import { ScoreInput } from '@/components/ScoreInput';
 import { InitializeCompetition } from './InitializeCompetition';
 import { ScoreTable } from './ScoreTable';
 import { useEffect, useReducer } from 'react';
@@ -13,7 +13,6 @@ import { getLetterFromNumber } from '../lib/helper_functions/getLetterFromNumber
 import { goToDancers, goToJudges, goToScores, goToStart, goToResults, startCompetition, addDancer, addJudge, addScore } from '../lib/state_mgmt/actions';
 import { ResultsCard } from './ResultsCard';
 import ErrorBoundary from './ErrorBoundary';
-import { JudgeScoreTable } from '../lib/types'
 
 export default function CompetitionCreator() {
   const [creatorState, dispatch] = useReducer(competitionCreatorReducer, initialState);
@@ -76,16 +75,11 @@ export default function CompetitionCreator() {
 
   // values verified by form and by reducer - no need for typing?
   const handleSubmitJudge = (values: any) => {
-    values.id = judgeId;
     dispatch(addJudge(values));
   }
 
-  const handleSubmitScore = (scores: Record<string, string>) => {
-    let scoresToAdd = {
-      id: scoreId,
-      scores
-    };    
-    dispatch(addScore(scoresToAdd));
+  const handleSubmitScore = (score: Record<string, string>) => {
+    dispatch(addScore(score));
   }
 
   return (
@@ -114,8 +108,8 @@ export default function CompetitionCreator() {
             />
           </ErrorBoundary>
           : null}
-        {(competitionType != '') 
-          ? <CompetitionSetupCard competitionSetup={competitionSetup} className='ml-6 lg:ml-0' /> 
+        {(competitionType != '')
+          ? <CompetitionSetupCard competitionSetup={competitionSetup} className='ml-6 lg:ml-0' />
           : null
         }
       </div>
