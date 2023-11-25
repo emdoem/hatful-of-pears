@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "deploy": "next build && next export && npx gh-pages -d out",
+    "predeploy": "npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
