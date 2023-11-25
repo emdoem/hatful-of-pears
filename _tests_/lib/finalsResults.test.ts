@@ -1,7 +1,16 @@
 import { describe, xdescribe, expect, it, beforeEach } from '@jest/globals';
 import { finalsResults } from '../../lib/finalsResults';
 
-describe('finalsResults ', () => {       
+function expectPosition(
+    results: ReturnType<typeof finalsResults>, 
+    position: number, 
+    expected: string[]
+) {
+    const outcome = results[position - 1];
+    return expect(outcome).toStrictEqual(expected);
+}
+
+describe('finalsResults ', () => {
     describe('for a random score table I', () => {
         const inputScores = [
             {
@@ -32,32 +41,19 @@ describe('finalsResults ', () => {
         const results = finalsResults(inputScores);
 
         it('presents a tie for 1st place', () => {
-            const expected = ['7', '13'];
-
-            const winner = results[0];
-
-            expect(winner).toStrictEqual(expected);
+            expectPosition(results, 1, ['7', '13']);
         });
+        it('assigns 2nd place to no dancer', () => {
+            expectPosition(results, 2, []);
+        })
         it('assigns 3rd place to dancer no 27', () => {
-            const expected = ['27'];
-
-            const thirdPlace = results[2];
-
-            expect(thirdPlace).toStrictEqual(expected);
+            expectPosition(results, 3, ['27']);
         });
         it('assigns 4th place to dancer no 4', () => {
-            const expected = ['4'];
-
-            const fourthPlace = results[3];
-
-            expect(fourthPlace).toStrictEqual(expected);
+            expectPosition(results, 4, ['4']);
         });
         it('assigns 5th place to dancer no 3', () => {
-            const expected = ['3'];
-
-            const fifthPlace = results[4];
-
-            expect(fifthPlace).toStrictEqual(expected);
+            expectPosition(results, 5, ['3']);
         });
 
     })
@@ -91,25 +87,13 @@ describe('finalsResults ', () => {
         const results = finalsResults(inputScores);
 
         it('breaks the tie for 1st place', () => {
-            const expected = ['6'];
-
-            const winner = results[0];
-
-            expect(winner).toStrictEqual(expected);
+            expectPosition(results, 1, ['6']);
         });
         it('assigns 2nd place to dancer no 4', () => {
-            const expected = ['4'];
-
-            const secondPlace = results[1];
-
-            expect(secondPlace).toStrictEqual(expected);
+            expectPosition(results, 2, ['4']);
         });
         it('assigns 3rd place to dancer no 2', () => {
-            const expected = ['2'];
-
-            const thirdPlace = results[2];
-
-            expect(thirdPlace).toStrictEqual(expected);
+            expectPosition(results, 3, ['2']);
         });
         it('assigns 4th place to dancer no 1', () => {
             const expected = ['1'];
@@ -132,7 +116,7 @@ describe('finalsResults ', () => {
 
             expect(sixthPlace).toStrictEqual(expected);
         });
-    }) 
+    })
     describe('for a random score table III', () => {
         const inputScores = [
             {
@@ -176,19 +160,11 @@ describe('finalsResults ', () => {
 
             expect(secondPlace).toStrictEqual(expected);
         });
-        it('assigns 3rd place to dancer no 102', () => {
-            const expected = ['102'];
-
-            const thirdPlace = results[2];
-
-            expect(thirdPlace).toStrictEqual(expected);
+        it('assigns 3rd place to dancer no 103', () => {
+            expectPosition(results, 3, ['103']);
         });
-        it('assigns 4th place to dancer no 103', () => {
-            const expected = ['103'];
-
-            const fourthPlace = results[3];
-
-            expect(fourthPlace).toStrictEqual(expected);
+        it('assigns 4th place to dancer no 102', () => {
+            expectPosition(results, 4, ['102']);
         });
         it('assigns 5th place to dancer no 106', () => {
             const expected = ['106'];
@@ -198,5 +174,47 @@ describe('finalsResults ', () => {
             expect(fifthPlace).toStrictEqual(expected);
         });
     })
-    
+    describe('for a random score table IV', () => {
+        const inputScores = [
+            {
+                id: '101',
+                scores: [4, 2, 2, 4, 4]
+            },
+            {
+                id: '102',
+                scores: [6, 1, 6, 3, 5]
+            },
+            {
+                id: '103',
+                scores: [2, 3, 4, 5, 3]
+            },
+            {
+                id: '104',
+                scores: [5, 6, 5, 1, 6]
+            },
+            {
+                id: '105',
+                scores: [1, 5, 3, 6, 1]
+            },
+            {
+                id: '106',
+                scores: [3, 4, 1, 2, 2]
+            }
+        ]
+        const results = finalsResults(inputScores);
+
+        it('assigns 1st place to dancer no 106', () => {
+            expectPosition(results, 1, ['106']);
+        });
+        it('assings 2nd place to dancer no 105', () => {
+            expectPosition(results, 2, ['105']);
+        });
+        it('assigns 3rd position to dancer no 103 - as 101 lacks majority', () => {
+            expectPosition(results, 3, ['103']);
+        });
+        it('assigns 4th position to dancer no 101', () => {
+            expectPosition(results, 4, ['101']);
+        })
+    })
+
 })
