@@ -62,6 +62,7 @@ export function competitionCreatorReducer(
       const dancerToAdd = action.data;
       const dancers = [...state.dancers];
       if (!dancerToAdd.id) return state;
+      dancerToAdd.id = dancerToAdd.id.toString();
       let areIdsUnique = true;
       dancers.forEach(dancer => (dancer.id === dancerToAdd.id) ? areIdsUnique = false : null);
       if (!areIdsUnique) {
