@@ -11,20 +11,22 @@ export function ResultsCard({
   dancers
 }: {
   scores: ScoresTable,
-  dancers: { [property: string]: any }[]
-}) {  
+  dancers: Record<string, any>[]
+}) {
   const resultsPositions = positions.slice(0, dancers.length);
-  const resultsArray = finalsResults(scores);
+  const results = finalsResults(scores);
 
-  const results = new Set(resultsPositions);
-  for (const position in results) {
-    results[position] = resultsArray
-  }
-  
-  function getDancerInfoByPosition(position: number) {
-    const dancer = dancers.filter(dancer => dancer.id === results[position])[0]; // this returns null (or undefined?)
-    return Object.values(dancer).join(', ')
-  }
+  const displayResults = resultsPositions.map((position: string, index: number) => {
+    const dancerData = results[index].map(dancerOnPosition => {
+      const dancerObject = dancers.find(dancer => dancer.id === dancerOnPosition);
+      if (dancerObject === undefined) return null;
+      return Object.values(dancerObject).join(', ');
+    })
+    return {
+      placeNumber: position,
+      content: dancerData
+    }
+  })
 
   return (
     <ErrorBoundary>
@@ -33,9 +35,11 @@ export function ResultsCard({
           <CardTitle>Competition Results</CardTitle>
         </CardHeader>
         <CardContent>
-          {resultsPositions.map((position: string) => (
-            <p key={position}>
-              {position}: {results[position]}, 
+          {displayResults.map((position) => (
+            <p key={position.placeNumber} className='my-5'>              
+              <b>{position.placeNumber}:</b> {position.content.map(dancer => (
+                dancer
+              ))},
             </p>
           ))}
         </CardContent>
@@ -44,5 +48,3 @@ export function ResultsCard({
 
   );
 }
-
-// {getDancerInfoByPosition(results[position])} - this throws an error, needs a fix
