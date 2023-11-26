@@ -7,9 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
-    "deploy": "next build && next export && npx gh-pages -d out",
-    "predeploy": "npm run build"
+    "test": "jest"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
@@ -40,7 +38,6 @@
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "cypress": "^13.5.0",
-    "gh-pages": "^6.1.0",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.1"
   }
