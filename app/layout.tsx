@@ -3,11 +3,9 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
-export const siteTitle = 'For a Hatful of Pears';
-
 
 export const metadata: Metadata = {
-  title: siteTitle,
+  title: 'For a Hatful of Pears',
   description: 'a swing dance competition app',
 }
 

@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from "zod";
 import { Form, FormLabel, FormField, FormItem, FormControl } from '@/components/ui/form';
-import { randomCouple } from '../lib/helper_functions/randomCouple';
 import { useEffect } from 'react';
 
 const FormSchema = z.object({

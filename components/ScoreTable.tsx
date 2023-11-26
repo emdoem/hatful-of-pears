@@ -39,7 +39,7 @@ export function ScoreTable({
           <TableHeader>
             <TableRow>
               {tableColumns.map((property) => (
-                <TableCell>{property}</TableCell>
+                <TableCell key={property}>{property}</TableCell>
               ))}
             </TableRow>
           </TableHeader>
@@ -47,7 +47,7 @@ export function ScoreTable({
             {data.map((element: any) => (
               <TableRow key={element.id}>
                 {tableColumns.map((property) => (
-                  <TableCellEditable>{element[property]}</TableCellEditable>
+                  <TableCellEditable key={property}>{element[property]}</TableCellEditable>
                 ))}
               </TableRow>
             ))}

@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from "zod";
 import { Form, FormLabel, FormField, FormItem, FormControl } from '@/components/ui/form';
-import { randomCouple } from '../lib/helper_functions/randomCouple';
 import { useEffect } from 'react';
 
 
@@ -72,7 +71,7 @@ export function CoupleInput({
                             name="followerName"
                             render={({ field }) => (
                                 <FormItem className="my-5">
-                                    <FormLabel>Follower's name</FormLabel>
+                                    <FormLabel>Follower&apos;s name</FormLabel>
                                     <FormControl>
                                         <Input type='string' {...field} />
                                     </FormControl>
@@ -83,7 +82,7 @@ export function CoupleInput({
                             name="leaderName"
                             render={({ field }) => (
                                 <FormItem className="my-5">
-                                    <FormLabel>Leader's name</FormLabel>
+                                    <FormLabel>Leader&apos;s name</FormLabel>
                                     <FormControl>
                                         <Input type='string' {...field} />
                                     </FormControl>
@@ -91,7 +90,7 @@ export function CoupleInput({
                             )} />
                         <div className='flex justify-between'>
                             <Button type='submit' className='mr-5'>Add</Button>
-                            <Button variant='secondary' disabled onClick={randomCouple}>Random</Button>
+                            <Button variant='secondary' disabled>Random</Button>
                         </div>
                     </form>
                 </Form>

@@ -23,7 +23,7 @@ export function WelcomeCard({ siteTitle }: { [prop: string]: any }) {
                     While awarding a winner on the basis of the arithmetic mean of the ranking recommendations may make intuitive sense,
                     it does not make sense for&nbsp;the&nbsp;fair placement of competitors.
                 </p>
-                <p className='not-italic my-3'>That's why we have
+                <p className='not-italic my-3'>That&apos;s why we have
                     <a
                         className='hover:text-green-700'
                         href='https://en.wikipedia.org/wiki/Skating_system'
