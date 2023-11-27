@@ -1,8 +1,9 @@
 'use client';
 import { finalsResults } from '@/lib/finalsResults';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { FinalsScoreTable, ScoresTable } from '@/lib/types';
+import { ScoresTable } from '@/lib/types';
 import ErrorBoundary from './ErrorBoundary';
+import React from 'react';
 
 const positions: string[] = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th'];
 
@@ -37,8 +38,11 @@ export function ResultsCard({
         <CardContent>
           {displayResults.map((position) => (
             <p key={position.placeNumber} className='my-5'>              
-              <b>{position.placeNumber}:</b> {position.content.map(dancer => (
-                dancer
+              <b>{position.placeNumber}:</b> {position.content.map((dancer, index) => (
+                <React.Fragment key={index}>
+                  {dancer},
+                  <br />
+                </React.Fragment>
               ))},
             </p>
           ))}

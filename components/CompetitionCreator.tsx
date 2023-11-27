@@ -116,8 +116,8 @@ export default function CompetitionCreator() {
       </div>
       <div className='flex flex-col mx-3'>
 
-        {(dancers.length > 0) ? <ScoreTable data={dancersWithScores} className="max-w-2xl" /> : null}
-        {(judges.length > 0) ? <ScoreTable data={judges} className="max-w-md" /> : null}
+        {(dancers.length > 0) ? <ScoreTable data={dancersWithScores} tableTitle='Dancers' className="max-w-2xl" /> : null}
+        {(judges.length > 0) ? <ScoreTable data={judges} tableTitle='Judges' className="max-w-md" /> : null}
       </div>
 
     </div>

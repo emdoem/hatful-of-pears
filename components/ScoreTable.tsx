@@ -16,22 +16,22 @@ type ScoreTableData = (typeof initialState.dancers) | (typeof initialState.judge
 export function ScoreTable({ 
   data,
   className,
+  tableTitle
 }: { 
   data: ScoreTableData,
-  className?: string
+  className?: string,
+  tableTitle?: string
 }) {
   const tableColumns = [...Object.keys(data[0])];
-  const tableTitle = () => {
-    // this is far from perfect since I have to rely on the state's shape:
-    if (typeof data[0].id === 'number') return 'Dancers';
-    if (typeof data[0].id === 'string') return 'Judges';
+  const title = () => {
+    if (tableTitle) return tableTitle;
     return 'Data Table'
   }
 
   return (
     <Card className={className}>
       <CardHeader className="flex-row justify-between">
-        <CardTitle>{tableTitle()}</CardTitle>
+        <CardTitle>{title()}</CardTitle>
         <Button variant='outline'>Edit</Button>
       </CardHeader>
       <CardContent>
@@ -39,7 +39,7 @@ export function ScoreTable({
           <TableHeader>
             <TableRow>
               {tableColumns.map((property) => (
-                <TableCell>{property}</TableCell>
+                <TableCell key={property}>{property}</TableCell>
               ))}
             </TableRow>
           </TableHeader>
@@ -47,7 +47,7 @@ export function ScoreTable({
             {data.map((element: any) => (
               <TableRow key={element.id}>
                 {tableColumns.map((property) => (
-                  <TableCellEditable>{element[property]}</TableCellEditable>
+                  <TableCellEditable key={property}>{element[property]}</TableCellEditable>
                 ))}
               </TableRow>
             ))}
