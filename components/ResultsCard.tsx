@@ -43,7 +43,7 @@ export function ResultsCard({
                   {dancer},
                   <br />
                 </React.Fragment>
-              ))},
+              ))}
             </p>
           ))}
         </CardContent>
