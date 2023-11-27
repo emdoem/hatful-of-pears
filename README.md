@@ -3,7 +3,7 @@
 This will be an app for calculating dance competition results at swing dance festivals.
 Calculations will be based on Skating System (https://en.wikipedia.org/wiki/Skating_system). I will try to handle most of popular cases (solo competions, leaders and followers judged separately or as couples).
 
-A first, static deployment to calculate dance competition finals:
+A static deployment to calculate dance competition finals:
 https://hatful-of-pears.vercel.app/
 
 Eventually a mobile app (or app opened in phone's browser) would gather scores from judges directly and results could go live to users visiting app as guests.
