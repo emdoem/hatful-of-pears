@@ -15,7 +15,7 @@ function Layout({
   children: React.ReactNode
 }) {
   return (
-    <div className='bg-gray-200'>
+    <div className='bg-gray-200 h-full'>
       {children}
     </div>
   )

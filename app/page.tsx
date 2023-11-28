@@ -13,7 +13,7 @@ export default function Home() {
             <Head>
                 <title>{siteTitle}</title>
             </Head>
-            <main className='flex justify-center p-20'>
+            <main className='flex justify-center'>
                 <WelcomeCard siteTitle={siteTitle} />
             </main>
         </Layout>
