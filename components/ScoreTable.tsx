@@ -32,7 +32,6 @@ export function ScoreTable({
     <Card className={className}>
       <CardHeader className="flex-row justify-between">
         <CardTitle>{title()}</CardTitle>
-        <Button variant='outline'>Edit</Button>
       </CardHeader>
       <CardContent>
         <Table className="my-3">
