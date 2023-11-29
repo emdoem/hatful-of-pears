@@ -9,20 +9,20 @@ import { useEffect } from 'react';
 
 
 const FormSchema = z.object({
-    id: z.number().min(0, 'Id must be a positive number.'),
     followerName: z.string(),
-    leaderName: z.string()
+    leaderName: z.string(),
+    id: z.number().min(0, 'Id must be a positive number.')
 });
 
 export function CoupleInput({
-    handleSubmit, 
+    handleSubmit,
     coupleNumber
 }: {
     handleSubmit: (values: z.infer<typeof FormSchema>) => void;
     coupleNumber: number;
 }) {
     const defaultValues = {
-        id: coupleNumber + 100, 
+        id: coupleNumber + 100,
         followerName: `Follower's name`,
         leaderName: `Leader's name`
     }
@@ -88,6 +88,7 @@ export function CoupleInput({
                                     </FormControl>
                                 </FormItem>
                             )} />
+
                         <div className='flex justify-between'>
                             <Button type='submit' className='mr-5'>Add</Button>
                         </div>
