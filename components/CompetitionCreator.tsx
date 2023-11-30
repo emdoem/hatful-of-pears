@@ -84,7 +84,7 @@ export default function CompetitionCreator() {
   }
 
   return (
-    <div className='flex flex-col lg:flex-row justify-start sm:p-20'>
+    <div className='flex flex-col lg:flex-row justify-start md:p-20'>
       <div className='flex flex-col sm:flex-row lg:flex-col mx-3'>
         {(creatorStep === 'start') ? <InitializeCompetition handleSubmit={handleStart} /> : null}
         {(creatorStep === 'dancers') ? <DancerInput
@@ -110,7 +110,10 @@ export default function CompetitionCreator() {
           </ErrorBoundary>
           : null}
         {(competitionType != '')
-          ? <CompetitionSetupCard competitionSetup={competitionSetup} className='sm:ml-6 lg:ml-0' />
+          ? <CompetitionSetupCard 
+            competitionSetup={competitionSetup} 
+            className='sm:ml-6 lg:ml-0' 
+          />
           : null
         }
       </div>
