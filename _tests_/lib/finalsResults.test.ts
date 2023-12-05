@@ -2,14 +2,15 @@ import { describe, xdescribe, expect, it, beforeEach } from '@jest/globals';
 import { finalsResults } from '../../lib/finalsResults';
 
 function expectPosition(
-    results: ReturnType<typeof finalsResults>, 
-    position: number, 
+    results: ReturnType<typeof finalsResults>,
+    position: number,
     expected: string[]
 ) {
     const outcome = results[position - 1];
     return expect(outcome).toStrictEqual(expected);
 }
 
+// asserting all position assignments for each case to check for any erratic regression
 describe('finalsResults ', () => {
     describe('for a random score table I', () => {
         const inputScores = [
@@ -56,7 +57,7 @@ describe('finalsResults ', () => {
             expectPosition(results, 5, ['3']);
         });
 
-    })
+    });
     describe('for a random score table II', () => {
         const inputScores = [
             {
@@ -116,7 +117,7 @@ describe('finalsResults ', () => {
 
             expect(sixthPlace).toStrictEqual(expected);
         });
-    })
+    });
     describe('for a random score table III', () => {
         const inputScores = [
             {
@@ -173,7 +174,7 @@ describe('finalsResults ', () => {
 
             expect(fifthPlace).toStrictEqual(expected);
         });
-    })
+    });
     describe('for a random score table IV', () => {
         const inputScores = [
             {
@@ -215,6 +216,117 @@ describe('finalsResults ', () => {
         it('assigns 4th position to dancer no 101', () => {
             expectPosition(results, 4, ['101']);
         })
-    })
+    });
+    describe('for a random score table with 8 dancers', () => {
+        const inputScores = [
+            {
+                id: '101',
+                scores: [5, 1, 8, 4, 6, 5, 8]
+            },
+            {
+                id: '102',
+                scores: [8, 3, 3, 7, 8, 1, 4]
+            },
+            {
+                id: '103',
+                scores: [4, 4, 7, 1, 5, 4, 3]
+            },
+            {
+                id: '104',
+                scores: [1, 5, 4, 2, 2, 8, 1]
+            },
+            {
+                id: '105',
+                scores: [3, 2, 2, 6, 1, 2, 7]
+            },
+            {
+                id: '106',
+                scores: [6, 6, 5, 3, 7, 3, 2]
+            },
+            {
+                id: '107',
+                scores: [7, 7, 1, 8, 4, 6, 6]
+            },
+            {
+                id: '108',
+                scores: [2, 8, 6, 5, 3, 7, 5]
+            }
+        ];
+        const results = finalsResults(inputScores);
 
+        it('assigns 1st position to dancer no 104', () => {
+            expectPosition(results, 1, ['104']);
+        });
+        it('assigns 2nd position to dancer no 105', () => {
+            expectPosition(results, 2, ['105']);
+        });
+        it('assigns 3rd position to dancer no 103', () => {
+            expectPosition(results, 3, ['103']);
+        });
+        it('assigns 4th position to dancer no 102', () => {
+            expectPosition(results, 4, ['102']);
+        });
+        it('assigns 5th position to dancer no 106', () => {
+            expectPosition(results, 5, ['106']);
+        });
+        it('assigns a tie on positions 6-7', () => {
+            expectPosition(results, 6, ['101', '108']);
+        });
+    });
+    describe('for Balboa Christmas Shuffle 2023 Mix&Match scores', () => {
+        const inputScores = [
+            {
+                id: '101',
+                scores: [1, 5, 3, 2, 2]
+            },
+            {
+                id: '102',
+                scores: [4, 8, 8, 6, 7]
+            },
+            {
+                id: '103',
+                scores: [5, 2, 6, 5, 6]
+            },
+            {
+                id: '104',
+                scores: [3, 1, 2, 3, 3]
+            },
+            {
+                id: '105',
+                scores: [6, 7, 5, 4, 4]
+            },
+            {
+                id: '106',
+                scores: [7, 4, 4, 7, 5]
+            },
+            {
+                id: '107',
+                scores: [8, 6, 7, 8, 8]
+            },
+            {
+                id: '108',
+                scores: [2, 3, 1, 1, 1]
+            }
+        ];
+        const results = finalsResults(inputScores);
+
+        it('assigns 1st position to dancer no 180', () => {
+            expectPosition(results, 1, ['108']);
+        });
+        it('assigns 2nd position to dancer no 101', () => {
+            expectPosition(results, 2, ['101']);
+        });
+        it('assigns 3rd position to dancer no 104', () => {
+            expectPosition(results, 3, ['104']);
+        });
+        it('assigns 4th position to dancer no 103', () => {
+            expectPosition(results, 4, ['103']);
+        });
+        it('assigns a tie on positions 5-6', () => {
+            expectPosition(results, 5, ['105', '106']);
+        });
+        it('assigns 7th position to dancer no 102', () => {
+            expectPosition(results, 7, ['102']);
+        })
+    });
 })
