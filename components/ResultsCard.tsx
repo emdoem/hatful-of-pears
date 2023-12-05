@@ -36,11 +36,11 @@ export function ResultsCard({
         </CardHeader>
         <CardContent>
           {displayResults.map((position) => (
-            <p key={position.placeNumber} className='my-5'>              
+            <div key={position.placeNumber} className='my-5'>              
               <b>{position.placeNumber}:</b> {position.content.map(dancer => (
-                dancer
-              ))},
-            </p>
+                <p>{dancer}</p>
+              ))}
+            </div>
           ))}
         </CardContent>
       </Card>
