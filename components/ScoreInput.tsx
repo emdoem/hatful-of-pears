@@ -21,11 +21,9 @@ export function ScoreInput({
     const noneSelectedPositions: Record<string, string> = {}
     const [selectedPositions, setSelectedPositions] = useState(noneSelectedPositions);
     function onSelectPosition(event: React.ChangeEvent<HTMLSelectElement>) {
-        const { name, value } = event.target
+        const { name, value } = event.target;
         setSelectedPositions({ ...selectedPositions, [name]: value })
     }
-
-    // useEffect to reset selectedPositions
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -38,10 +36,10 @@ export function ScoreInput({
             formDataObject[key] = parseInt(value.toString()[0]);
         });
 
-        console.log('Form data submitted:', formDataObject);
-        // Perform any additional actions, like sending data to the server
+        // console.log('Form data submitted:', formDataObject);
         handleSubmit(formDataObject);
         event.currentTarget.reset();
+        document.querySelector('select')?.focus();
         setSelectedPositions({});
     };
 
@@ -56,9 +54,8 @@ export function ScoreInput({
         })
         console.log(randomValues);
         handleSubmit(randomValues);
-        if (formRef.current) {
-            formRef.current.reset();
-        }
+        formRef.current?.reset();
+        document.querySelector('select')?.focus();
         setSelectedPositions({});
     };
 
