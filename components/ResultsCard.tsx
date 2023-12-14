@@ -27,7 +27,7 @@ export default function ResultsWithBoundary({
         </ErrorBoundary>
       </CardContent>
       <CardFooter>
-        <Button>Print</Button>
+        <Button onClick={window.print}>Print</Button>
       </CardFooter>
     </Card>
 
