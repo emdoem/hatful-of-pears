@@ -11,7 +11,7 @@ import { initialState } from '@/lib/state_mgmt/competitionCreatorReducer';
 import { CompetitionSetupCard } from './CompetitionSetupCard';
 import { getLetterFromNumber } from '../lib/helper_functions/getLetterFromNumber';
 import { goToDancers, goToJudges, goToScores, goToStart, goToResults, startCompetition, addDancer, addJudge, addScore } from '../lib/state_mgmt/actions';
-import { ResultsCard } from './ResultsCard';
+import ResultsCard from './ResultsCard';
 import ErrorBoundary from './ErrorBoundary';
 
 export default function CompetitionCreator() {
@@ -88,7 +88,7 @@ export default function CompetitionCreator() {
       <div className='flex flex-col sm:flex-row lg:flex-col mx-3'>
         {(creatorStep === 'start') ? <InitializeCompetition handleSubmit={handleStart} /> : null}
         {(creatorStep === 'dancers') ? <DancerInput
-          competitionType={getCompetitionSetup(creatorState).competitionType}
+          competitionType={competitionType}
           handleSubmit={handleSubmitDancer}
           inputNumber={dancers.length + 1}
         /> : null}
@@ -110,17 +110,23 @@ export default function CompetitionCreator() {
           </ErrorBoundary>
           : null}
         {(competitionType != '')
-          ? <CompetitionSetupCard 
-            competitionSetup={competitionSetup} 
-            className='sm:ml-6 lg:ml-0' 
+          ? <CompetitionSetupCard
+            competitionSetup={competitionSetup}
+            className='sm:ml-6 lg:ml-0'
           />
           : null
         }
       </div>
       <div className='flex flex-col mx-3'>
 
-        {(dancers.length > 0) ? <ScoreTable data={dancersWithScores} tableTitle='Dancers' className="max-w-2xl" /> : null}
-        {(judges.length > 0) ? <ScoreTable data={judges} tableTitle='Judges' className="max-w-md" /> : null}
+        {(dancers.length > 0) ? <ScoreTable 
+          data={dancersWithScores} 
+          tableTitle='Dancers' 
+        /> : null}
+        {(judges.length > 0) ? <ScoreTable 
+          data={judges} 
+          tableTitle='Judges' 
+        /> : null}
       </div>
 
     </div>

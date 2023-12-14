@@ -1,12 +1,40 @@
 'use client';
 import { finalsResults } from '@/lib/finalsResults';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { FinalsScoreTable, ScoresTable } from '@/lib/types';
 import ErrorBoundary from './ErrorBoundary';
+import { Button } from './ui/button';
 
 const positions: string[] = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th'];
 
-export function ResultsCard({
+export default function ResultsWithBoundary({
+  scores,
+  dancers,
+  className
+}: {
+  scores: ScoresTable,
+  dancers: Record<string, any>[],
+  className?: string
+}) {
+  return (
+    <Card className={className}>
+      <CardHeader>
+        <CardTitle>Competition Results</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ErrorBoundary>
+          <ResultsCard scores={scores} dancers={dancers} />
+        </ErrorBoundary>
+      </CardContent>
+      <CardFooter>
+        <Button>Print</Button>
+      </CardFooter>
+    </Card>
+
+  )
+}
+
+function ResultsCard({
   scores,
   dancers
 }: {
@@ -28,23 +56,17 @@ export function ResultsCard({
     }
   })
 
-  return (
-    <ErrorBoundary>
-      <Card>
-        <CardHeader>
-          <CardTitle>Competition Results</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {displayResults.map((position) => (
-            <div key={position.placeNumber} className='my-5'>              
-              <b>{position.placeNumber}:</b> {position.content.map(dancer => (
-                <p>{dancer}</p>
-              ))}
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-    </ErrorBoundary>
+  // throw new Error('Whoopsie!');
 
+  return (
+    <>
+      {displayResults.map((position) => (
+        <div key={position.placeNumber} className='my-5'>
+          <b>{position.placeNumber}:</b> {position.content.map(dancer => (
+            <p>{dancer}</p>
+          ))}
+        </div>
+      ))}
+    </>
   );
 }
