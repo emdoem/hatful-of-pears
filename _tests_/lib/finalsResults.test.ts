@@ -217,7 +217,7 @@ describe('finalsResults ', () => {
             expectPosition(results, 4, ['101']);
         })
     });
-    describe('for a random score table with 8 dancers', () => {
+    describe('for a random score table V: 8 dancers, 7 judges', () => {
         const inputScores = [
             {
                 id: '101',
@@ -329,4 +329,63 @@ describe('finalsResults ', () => {
             expectPosition(results, 7, ['102']);
         })
     });
+    describe('for a random score table VI: 8 dancers, 7 judges', () => {
+        const inputScores = [
+            {
+                id:'101',
+                scores: [8,5,1,3,1,3,1]
+            },
+            {
+                id: '102',
+                scores: [2,1,8,8,3,5,4]
+            },
+            {
+                id: '103',
+                scores: [1,7,4,4,6,6,5]
+            },
+            {
+                id: '104',
+                scores: [7,8,6,1,5,2,6]
+            },
+            {
+                id: '105',
+                scores: [3,4,5,7,2,8,7]
+            },
+            {
+                id: '106',
+                scores: [4,6,7,5,8,4,3]
+            },
+            {
+                id: '107',
+                scores: [6,2,3,2,4,1,8]
+            },
+            {
+                id: '108',
+                scores: [5,3,2,6,7,7,2]
+            }
+        ];
+        const results = finalsResults(inputScores);
+
+        it('assigns 1st position to dancer no 101', () => {
+            expectPosition(results, 1, ['101']);
+        });
+        it('assigns 2nd position to dancer no 107', () => {
+            expectPosition(results, 2, ['107']);
+        });
+        it('assigns 3rd position to dancer no 102', () => {
+            expectPosition(results, 3, ['102']);
+        });
+        it('assigns 4th position to dancer no 108', () => {
+            expectPosition(results, 4, ['108']);
+        });
+        it('assigns 5th position to dancer no 104', () => {
+            expectPosition(results, 5, ['104']);
+        });
+        it('assigns 6th position to dancer no 103', () => {
+            expectPosition(results, 6, ['103']);
+        });
+        it('assigns 7th position to dancer no 106', () => {
+            expectPosition(results, 7, ['106']);
+        });
+    })
 })
