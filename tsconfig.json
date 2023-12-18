@@ -23,5 +23,11 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "_tests_/lib/luckyNumber.test.ts", "jest.config.js"],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "webpack",
+    "jest",
+    "cypress",
+  ]
+
 }
