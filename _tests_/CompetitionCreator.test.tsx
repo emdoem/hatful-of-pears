@@ -2,7 +2,8 @@ import CompetitionCreator from '@/components/CompetitionCreator';
 
 import {getByText, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-// import { describe, xdescribe, expect, it, beforeEach } from '@jest/globals';
+import { describe, xdescribe, expect, it, beforeEach } from '@jest/globals';
+import '@testing-library/jest-dom/jest-globals';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 
