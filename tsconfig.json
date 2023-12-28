@@ -8,7 +8,11 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "baseUrl": "./",
+    "paths": {
+      "@/components/*": ["components/*"]
+    },    
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -17,12 +21,9 @@
       {
         "name": "next"
       }
-    ],
-    "paths": {
-      "@/*": ["./*"]
-    }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "_tests_/lib/luckyNumber.test.ts", "jest.config.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "_tests_/lib/luckyNumber.test.ts", "jest.config.ts"],
   "exclude": [
     "node_modules",
     "webpack",
